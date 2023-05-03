@@ -1,22 +1,37 @@
 import { Box } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Egg from "../interfaces/Egg";
 import runPhysics from "../utils/runPhysics";
 
 export default function Game() {
+  const [boardSize, setBoardSize] = useState<number>(1);
+
+  useEffect(() => {
+    if (document.body 
+      && document.body.clientWidth
+      && document.body.clientWidth <= 600
+    ) {
+      setBoardSize(document.body.clientWidth / 600);
+    }
+  }, []);
+
   useEffect(() => {
     /* Canvas Setting */
     let c = document.getElementById("board");
     let ctx = (c as HTMLCanvasElement).getContext("2d");
-    let width = 600;
-    let height = 600;
+    let width = 600 * boardSize;
+    let height = 600 * boardSize;
+
+    // initialize width
+    ctx.canvas.width = width;
+    ctx.canvas.width = height;
 
     /* Board Setting */
 
     // Egg's radius
-    let radius = 14;
+    let radius = 14 * boardSize;
     // Board Line distance (horizontal, vertical)
-    let blank = 12;
+    let blank = 12 * boardSize;
     // Egg's Array
     let egg_array = new Array();
 
@@ -24,7 +39,7 @@ export default function Game() {
       // Init Eggs (Spawn)
       for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
-          egg_array.push(new Egg(108 + i * 6 * 32, 108 + j * 6 * 32, 0));
+          egg_array.push(new Egg((108 + i * 6 * 32) * boardSize, (108 + j * 6 * 32) * boardSize, 0));
         }
       }
       // Mouse Event Init
@@ -60,24 +75,24 @@ export default function Game() {
       for (let i = 0; i < 19; i++) { 
         // horizontal line draw
         ctx.beginPath();
-        ctx.moveTo(blank + i * 32, blank);
-        ctx.lineTo(blank + i * 32, height - blank);
+        ctx.moveTo(blank + i * 32 * boardSize, blank);
+        ctx.lineTo(blank + i * 32 * boardSize, height - blank);
         ctx.stroke();
 
         // vertical line draw
         ctx.beginPath();
-        ctx.moveTo(blank, blank + i * 32);
-        ctx.lineTo(height - blank, blank + i * 32);
+        ctx.moveTo(blank, blank + i * 32 * boardSize);
+        ctx.lineTo(height - blank, blank + i * 32 * boardSize);
         ctx.stroke();
       }
 
       // board draw point
-      let circle_radius = 3;
+      let circle_radius = 3 * boardSize;
       for (let i = 0; i < 3; i++) { 
         for (let j = 0; j < 3; j++) { 
           // board circle draw
           ctx.beginPath();
-          ctx.arc(blank + 3 * 32 + i * 6 * 32, blank + 3 * 32  + j * 6 * 32, circle_radius, 0, 2*Math.PI);
+          ctx.arc(blank + (3 * 32 + i * 6 * 32) * boardSize, blank + (3 * 32  + j * 6 * 32) * boardSize, circle_radius, 0, 2*Math.PI);
           ctx.fill();
           ctx.stroke();
         }
@@ -86,8 +101,8 @@ export default function Game() {
       // Draw Shooting Range
       if (dragging == true) {
         const rotateAngle = drag_x >= 0 ? Math.atan(drag_y / drag_x) : Math.atan(drag_y / drag_x) + Math.PI;
-        const destX = egg_array[drag_index].x_pos + drag_x;
-        const destY = egg_array[drag_index].y_pos + drag_y;
+        const destX = egg_array[drag_index].x_pos + drag_x * 1.5 * boardSize;
+        const destY = egg_array[drag_index].y_pos + drag_y * 1.5 * boardSize;
 
         ctx.beginPath();
         ctx.strokeStyle="#4AF5B7CC"
@@ -133,16 +148,6 @@ export default function Game() {
         ctx.fill();
         ctx.stroke();
       }
-      setTimeout(updateBoard, 20);
-    }
-
-    /* Mouse Event */
-    function getMousePos(canvas, evt) {
-      let rect = canvas.getBoundingClientRect();
-      return {
-        x: evt.clientX - rect.left,
-        y: evt.clientY - rect.top
-      };
     }
 
     /* Drag and Drop */
@@ -209,7 +214,7 @@ export default function Game() {
       let y_dir = drag_y / distance;
       if (distance > 3 * radius) {
         // push using addForce
-        egg_array[drag_index].addForce(x_dir, y_dir, distance / 5);
+        egg_array[drag_index].addForce(x_dir, y_dir, distance / 5 * 2);
 
         distance = 0;
         // when push call runPhysics
@@ -219,16 +224,21 @@ export default function Game() {
     /* Drag and Drop End */
 
     init();
-    updateBoard();
+    const updateBoardInterval = setInterval(updateBoard, 20);
     
     return () => {
+      clearInterval(updateBoardInterval);
       c.removeEventListener("mousedown", mouseDownListener, false);
       c.removeEventListener("touchstart", mouseDownListener, false);
     }
-  });
+  }, [boardSize]);
   return (
-    <Box>
-      <canvas id="board" width="600" height="600"></canvas>
+    <Box minWidth="fit-content">
+      <canvas 
+        id="board" 
+        width={`${600 * boardSize}`} 
+        height={`${600 * boardSize}`}
+      />
     </Box>
   );
 };
