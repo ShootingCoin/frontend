@@ -5,7 +5,8 @@ export default function Egg(x_pos, y_pos, color) {
   this.x_dir = 0;
   this.y_dir = 0;
   this.speed = 0;
-  this.initspeed = 0;
+  this.friction = 0.1;
+  this.isOut = false;
 }
 
 // push using addForce

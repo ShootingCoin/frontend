@@ -3,15 +3,18 @@ import React, { useEffect, useState } from "react";
 import Egg from "../interfaces/Egg";
 import runPhysics from "../utils/runPhysics";
 
+const fullW = 500;
+const fullH = 500;
+
 export default function Game() {
-  const [boardSize, setBoardSize] = useState<number>(1);
+  const [boardSize, setBoardSize] = useState<number>(1 - 40 / 500);
 
   useEffect(() => {
     if (document.body 
       && document.body.clientWidth
-      && document.body.clientWidth <= 600
+      && document.body.clientWidth <= fullW
     ) {
-      setBoardSize(document.body.clientWidth / 600);
+      setBoardSize((document.body.clientWidth - 40) / fullW);
     }
   }, []);
 
@@ -19,8 +22,8 @@ export default function Game() {
     /* Canvas Setting */
     let c = document.getElementById("board");
     let ctx = (c as HTMLCanvasElement).getContext("2d");
-    let width = 600 * boardSize;
-    let height = 600 * boardSize;
+    let width = fullW * boardSize;
+    let height = fullH * boardSize;
 
     // initialize width
     ctx.canvas.width = width;
@@ -29,9 +32,9 @@ export default function Game() {
     /* Board Setting */
 
     // Egg's radius
-    let radius = 14 * boardSize;
+    let radius = fullW * 7 / 300 * boardSize;
     // Board Line distance (horizontal, vertical)
-    let blank = 12 * boardSize;
+    let blank = fullW / 50 * boardSize;
     // Egg's Array
     let egg_array = new Array();
 
@@ -39,7 +42,13 @@ export default function Game() {
       // Init Eggs (Spawn)
       for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
-          egg_array.push(new Egg((108 + i * 6 * 32) * boardSize, (108 + j * 6 * 32) * boardSize, 0));
+          egg_array.push(
+            new Egg(
+              (0.18 + i * 0.32) * fullW * boardSize, 
+              (0.18 + j * 0.32) * fullW * boardSize, 
+              0
+            )
+          );
         }
       }
       // Mouse Event Init
@@ -50,50 +59,26 @@ export default function Game() {
     // Canvas Loop
     function updateBoard(){
       // board fill color
-      ctx.fillStyle="#48466D";
+      ctx.fillStyle="#090727";
       ctx.fillRect(0, 0, width, height);
 
       // board draw line
-      ctx.strokeStyle="#DDFFF5";
-      ctx.fillStyle="#DDFFF5";
-
-      const borderPaths = [
-        { x: 0, y: 0 },
-        { x: 0, y: height },
-        { x: width, y: height },
-        { x: width, y: 0 },
-      ];
-
-      // border
-      for (let i = 0; i < 4; i++) {
-        ctx.beginPath();
-        ctx.moveTo(borderPaths[i].x, borderPaths[i].y);
-        ctx.lineTo(borderPaths[(i + 1) % 4].x, borderPaths[(i + 1) % 4].y);
-        ctx.stroke();
-      }
+      ctx.strokeStyle="#7EC6FF8A";
+      ctx.fillStyle="#7EC6FF8A";
+      ctx.lineWidth = 0.8;
 
       for (let i = 0; i < 19; i++) { 
-        // horizontal line draw
-        ctx.beginPath();
-        ctx.moveTo(blank + i * 32 * boardSize, blank);
-        ctx.lineTo(blank + i * 32 * boardSize, height - blank);
-        ctx.stroke();
-
-        // vertical line draw
-        ctx.beginPath();
-        ctx.moveTo(blank, blank + i * 32 * boardSize);
-        ctx.lineTo(height - blank, blank + i * 32 * boardSize);
-        ctx.stroke();
-      }
-
-      // board draw point
-      let circle_radius = 3 * boardSize;
-      for (let i = 0; i < 3; i++) { 
-        for (let j = 0; j < 3; j++) { 
-          // board circle draw
+        if (i !== 0 && i !== 18) {
+          // horizontal line draw
           ctx.beginPath();
-          ctx.arc(blank + (3 * 32 + i * 6 * 32) * boardSize, blank + (3 * 32  + j * 6 * 32) * boardSize, circle_radius, 0, 2*Math.PI);
-          ctx.fill();
+          ctx.moveTo(blank + i * 4 / 75 * fullW * boardSize, blank);
+          ctx.lineTo(blank + i * 4 / 75 * fullW * boardSize, height - blank);
+          ctx.stroke();
+
+          // vertical line draw
+          ctx.beginPath();
+          ctx.moveTo(blank, blank + i * 4 / 75 * fullW * boardSize);
+          ctx.lineTo(height - blank, blank + i * 4 / 75 * fullW * boardSize);
           ctx.stroke();
         }
       }
@@ -101,34 +86,39 @@ export default function Game() {
       // Draw Shooting Range
       if (dragging == true) {
         const rotateAngle = drag_x >= 0 ? Math.atan(drag_y / drag_x) : Math.atan(drag_y / drag_x) + Math.PI;
-        const destX = egg_array[drag_index].x_pos + drag_x * 1.5 * boardSize;
-        const destY = egg_array[drag_index].y_pos + drag_y * 1.5 * boardSize;
+        const startX = egg_array[drag_index].x_pos;
+        const startY = egg_array[drag_index].y_pos;
+        const destX = startX + drag_x * 1.5 * boardSize;
+        const destY = startY + drag_y * 1.5 * boardSize;
 
         ctx.beginPath();
-        ctx.strokeStyle="#4AF5B7CC"
-        ctx.fillStyle="#4AF5B777"
-        ctx.arc(egg_array[drag_index].x_pos, egg_array[drag_index].y_pos, radius * 3, 0, 2*Math.PI);
+        const gradient = ctx.createRadialGradient(startX, startY, radius * 0.9, startX, startY, radius * 4);
+        gradient.addColorStop(0, "#8BF8FFF7");
+        gradient.addColorStop(0.5, "transparent");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(startX - radius * 2, startY - radius * 2, radius * 4, radius * 4);
         ctx.fill();
-        ctx.stroke();
 
         ctx.beginPath();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#8BF8FFF7';
         ctx.moveTo(egg_array[drag_index].x_pos, egg_array[drag_index].y_pos);
         ctx.lineTo(destX, destY);
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.fillStyle="#4AF5B7CC"
+        ctx.fillStyle="#8BF8FFF7"
         ctx.moveTo(
-          destX + 5 * Math.cos(rotateAngle - Math.PI / 2), 
-          destY + 5 * Math.sin(rotateAngle - Math.PI / 2)
+          destX + 10 * Math.cos(rotateAngle - Math.PI / 2) * boardSize, 
+          destY + 10 * Math.sin(rotateAngle - Math.PI / 2) * boardSize
         );
         ctx.lineTo(
-          destX + 15 * Math.cos(rotateAngle), 
-          destY + 15 * Math.sin(rotateAngle)
+          destX + 10 * Math.cos(rotateAngle) * boardSize, 
+          destY + 10 * Math.sin(rotateAngle) * boardSize
         );
         ctx.lineTo(
-          destX + 5 * Math.cos(rotateAngle + Math.PI / 2), 
-          destY + 5 * Math.sin(rotateAngle + Math.PI / 2)
+          destX + 10 * Math.cos(rotateAngle + Math.PI / 2) * boardSize, 
+          destY + 10 * Math.sin(rotateAngle + Math.PI / 2) * boardSize
         );
         ctx.fill();
       }
@@ -233,11 +223,23 @@ export default function Game() {
     }
   }, [boardSize]);
   return (
-    <Box minWidth="fit-content">
+    <Box
+      p="1px"
+      boxSizing="border-box"
+      w="fit-content"
+      height="fit-content"
+      background="linear-gradient(168deg, #8BCEFF 0%, #2C73FF 20%, #C5FFFF 40%, #BFE8FF 60%,#96ADFF 80%, #00A3FF 100%)"
+      borderRadius="9px"
+      sx={{
+        '& canvas': {
+          borderRadius: '9px'
+        }
+      }}
+    >
       <canvas 
         id="board" 
-        width={`${600 * boardSize}`} 
-        height={`${600 * boardSize}`}
+        width={`${fullW * boardSize}`} 
+        height={`${fullH * boardSize}`}
       />
     </Box>
   );

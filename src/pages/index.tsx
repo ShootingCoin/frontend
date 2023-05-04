@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import React from 'react';
-import { Box } from '@chakra-ui/react';
+import Container from '../components/Container';
 import Game from '../components/Game';
 
 const MainPage = () => {
@@ -9,14 +9,9 @@ const MainPage = () => {
       <Head>
         <title>Shooting coin</title>
       </Head>
-      <Box
-        minHeight="100vh"
-        display="flex" 
-        alignItems="center" 
-        justifyContent="center"
-      >
-        <Game />
-      </Box>
+      <Container>
+        <Game/>
+      </Container>
     </>
   );
 };
