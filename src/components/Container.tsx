@@ -8,9 +8,8 @@ export default function Container({ children }) {
       maxW="500px"
       minH="100vh"
       w="100%"
-      display="flex" 
-      alignItems="center" 
-      justifyContent="center"
+      display="flex"
+      flexDirection="column"
     >
       {children}
     </Box>
