@@ -4,6 +4,9 @@
   "main": "index.js",
   "dependencies": {
     "@chakra-ui/react": "^2.4.9",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@svgr/webpack": "^6.5.1",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "^5.48.1",
     "eslint-config-next": "^13.1.2",

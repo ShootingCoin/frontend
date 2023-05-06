@@ -1,5 +1,8 @@
-import HomeHeader from "./HomeHeader";
 
-export default {
+import HomeHeader from "./HomeHeader";
+import MypageHeader from "./MypageHeader";
+
+export {
   HomeHeader,
+  MypageHeader,
 };

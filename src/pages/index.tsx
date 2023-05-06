@@ -3,8 +3,8 @@ import Head from 'next/head';
 import React from 'react';
 import Button from '../components/Button';
 import Container from '../components/Container';
-import HomeHeader from '../components/Header/HomeHeader';
-import Rooms from '../components/Home/Rooms';
+import { HomeHeader } from '../components/Header';
+import { Rooms } from '../components/Home';
 
 const MainPage = () => {
   const wallet = true;

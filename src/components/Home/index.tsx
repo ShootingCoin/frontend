@@ -1,7 +1,7 @@
 import RoomCard from "./RoomCard";
 import Rooms from "./Rooms";
 
-export default {
+export {
   RoomCard,
   Rooms,
 };

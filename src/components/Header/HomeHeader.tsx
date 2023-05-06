@@ -5,6 +5,7 @@ const HomeHeader = () => {
   const balance = 12.35;
   return (
     <Box 
+      as="header"
       p="18px 20px" 
       display="flex" 
       alignItems="center" 
