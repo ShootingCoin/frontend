@@ -1,10 +1,14 @@
 import { Box } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React from "react";
 import { CardTypeEnum } from "~/src/types";
 import RoomCard from "./RoomCard";
 
-export default function Rooms() {
-  const [selected, setSelected] = useState<CardTypeEnum>(CardTypeEnum.Gold);
+interface Props {
+  selected: CardTypeEnum;
+  onSelect: (val: CardTypeEnum) => void;
+};
+
+export default function Rooms({ selected, onSelect }: Props) {
   return (
     <Box
       my="auto"
@@ -16,22 +20,22 @@ export default function Rooms() {
       <RoomCard 
         type={CardTypeEnum.Gold} 
         isSelected={selected === CardTypeEnum.Gold} 
-        onClick={() => setSelected(CardTypeEnum.Gold)}
+        onClick={() => onSelect(CardTypeEnum.Gold)}
       />
       <RoomCard 
         type={CardTypeEnum.Silver} 
         isSelected={selected === CardTypeEnum.Silver} 
-        onClick={() => setSelected(CardTypeEnum.Silver)}
+        onClick={() => onSelect(CardTypeEnum.Silver)}
       />
       <RoomCard 
         type={CardTypeEnum.Bronze} 
         isSelected={selected === CardTypeEnum.Bronze} 
-        onClick={() => setSelected(CardTypeEnum.Bronze)}
+        onClick={() => onSelect(CardTypeEnum.Bronze)}
       />
       <RoomCard 
         type={CardTypeEnum.Friend} 
         isSelected={selected === CardTypeEnum.Friend} 
-        onClick={() => setSelected(CardTypeEnum.Friend)}
+        onClick={() => onSelect(CardTypeEnum.Friend)}
       />
     </Box>
   );

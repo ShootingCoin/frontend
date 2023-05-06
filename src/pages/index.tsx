@@ -1,13 +1,18 @@
 import { Text } from '@chakra-ui/react';
 import Head from 'next/head';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
 import Button from '../components/Button';
 import Container from '../components/Container';
 import { HomeHeader } from '../components/Header';
 import { Rooms } from '../components/Home';
+import { CardTypeEnum } from '../types';
 
 const MainPage = () => {
   const wallet = true;
+  const [selected, setSelected] = useState<CardTypeEnum>(CardTypeEnum.Gold);
+  const router = useRouter();
+  
   return (
     <>
       <Head>
@@ -16,7 +21,7 @@ const MainPage = () => {
       <Container>
         <HomeHeader />
         {wallet ? (
-          <Rooms />
+          <Rooms selected={selected} onSelect={setSelected} />
         ) : (
           <Text
             mt="132px"
@@ -31,7 +36,7 @@ const MainPage = () => {
         )}
         <Button 
           margin="auto auto 72px auto"
-          onClick={() => {}}
+          onClick={() => router.push({ pathname: '/game/ready', query: { type: selected } })}
         >
           {wallet ? "Enter the room" : "Get Started"}
         </Button>

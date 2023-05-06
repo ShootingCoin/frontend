@@ -10,3 +10,11 @@ export enum MypageNavigatorEnum {
   History="history",
   NFT="nft",
 }
+
+export type Chip = {
+  name: string;
+  amount: number;
+  unit: string;
+  isSelected?: boolean;
+  isOut?: boolean;
+};
