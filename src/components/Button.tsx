@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button as Btn } from '@chakra-ui/react';
+import Spinner from './Spinner';
 
 interface Props {
   children: React.ReactNode;
@@ -15,12 +16,11 @@ const Button = ({
   onClick,
   ...rest
 }: Props & React.CSSProperties) => {
-  const background = disabled ? "#78E7FF80" : "#78E7FF";
+  const background = (disabled || isLoading) ? "#78E7FF80" : "#78E7FF";
   return (
     <Btn
       type="button"
-      disabled={disabled}
-      isLoading={isLoading}
+      disabled={disabled || isLoading}
       onClick={onClick}
       maxW="260px"
       w="100%"
@@ -36,7 +36,9 @@ const Button = ({
       _active={{ bg: background }}
       _focus={{ bg: background }}
     >
-      {children}
+      {!isLoading ? children : (
+        <Spinner size={47} />
+      )}
     </Btn>
   )
 };

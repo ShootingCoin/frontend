@@ -1,7 +1,8 @@
-import { Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import Egg from "../interfaces/Egg";
-import runPhysics from "../utils/runPhysics";
+import { Box } from "@chakra-ui/react";
+import Egg from "../../interfaces/Egg";
+import runPhysics from "../../utils/runPhysics";
+import Board from "./Board";
 
 const fullW = 500;
 const fullH = 500;
@@ -20,7 +21,7 @@ export default function Game() {
 
   useEffect(() => {
     /* Canvas Setting */
-    let c = document.getElementById("board");
+    let c = document.getElementById("game");
     let ctx = (c as HTMLCanvasElement).getContext("2d");
     let width = fullW * boardSize;
     let height = fullH * boardSize;
@@ -32,7 +33,7 @@ export default function Game() {
     /* Board Setting */
 
     // Egg's radius
-    let radius = fullW * 7 / 300 * boardSize;
+    let radius = fullW * 14 / 300 * boardSize;
     // Board Line distance (horizontal, vertical)
     let blank = fullW / 50 * boardSize;
     // Egg's Array
@@ -58,30 +59,7 @@ export default function Game() {
 
     // Canvas Loop
     function updateBoard(){
-      // board fill color
-      ctx.fillStyle="#090727";
-      ctx.fillRect(0, 0, width, height);
-
-      // board draw line
-      ctx.strokeStyle="#7EC6FF8A";
-      ctx.fillStyle="#7EC6FF8A";
-      ctx.lineWidth = 0.8;
-
-      for (let i = 0; i < 19; i++) { 
-        if (i !== 0 && i !== 18) {
-          // horizontal line draw
-          ctx.beginPath();
-          ctx.moveTo(blank + i * 4 / 75 * fullW * boardSize, blank);
-          ctx.lineTo(blank + i * 4 / 75 * fullW * boardSize, height - blank);
-          ctx.stroke();
-
-          // vertical line draw
-          ctx.beginPath();
-          ctx.moveTo(blank, blank + i * 4 / 75 * fullW * boardSize);
-          ctx.lineTo(height - blank, blank + i * 4 / 75 * fullW * boardSize);
-          ctx.stroke();
-        }
-      }
+      ctx.clearRect(0, 0, width, height);
 
       // Draw Shooting Range
       if (dragging == true) {
@@ -126,17 +104,10 @@ export default function Game() {
       // Draw Egg
       for (let i = 0; i < egg_array.length; i++) {
         ctx.beginPath();
-        if (egg_array[i].color == 0) {
-          ctx.strokeStyle="#4AF5B7";
-          ctx.fillStyle="#4AF5B7";
-        } else {
-          ctx.strokeStyle="#FFFFFF";
-          ctx.fillStyle="#FFFFFF";
-        }
+        let image = new Image();
+        image.src = '/imgs/chips/chip_aptos.svg';
 
-        ctx.arc(egg_array[i].x_pos, egg_array[i].y_pos, radius, 0, 2*Math.PI);
-        ctx.fill();
-        ctx.stroke();
+        ctx.drawImage(image, egg_array[i].x_pos - radius, egg_array[i].y_pos - radius, radius * 2, radius * 2);
       }
     }
 
@@ -147,6 +118,8 @@ export default function Game() {
     let drag_y;
 
     function mouseDownListener(evt) {
+      evt.preventDefault();
+
       let clientX = evt.clientX;
       let clientY = evt.clientY;
 
@@ -223,24 +196,14 @@ export default function Game() {
     }
   }, [boardSize]);
   return (
-    <Box
-      p="1px"
-      boxSizing="border-box"
-      w="fit-content"
-      height="fit-content"
-      background="linear-gradient(168deg, #8BCEFF 0%, #2C73FF 20%, #C5FFFF 40%, #BFE8FF 60%,#96ADFF 80%, #00A3FF 100%)"
-      borderRadius="9px"
-      sx={{
-        '& canvas': {
-          borderRadius: '9px'
-        }
-      }}
-    >
-      <canvas 
-        id="board" 
+    <Box position="relative">
+      <canvas
+        id="game" 
         width={`${fullW * boardSize}`} 
         height={`${fullH * boardSize}`}
+        style={{ position: 'relative', zIndex: 2 }}
       />
+      <Board/>
     </Box>
   );
 };

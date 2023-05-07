@@ -1,9 +1,8 @@
 import { Box, Text } from "@chakra-ui/react";
 import React from "react";
 import { Chip } from "~/src/types";
-import ChipIcon from 'public/imgs/chips/chip_aptos.svg';
-import ChipOutIcon from 'public/imgs/chips/chip_aptos_out.svg';
 import CheckIcon from 'public/icons/icon-check.svg';
+import Image from "next/image";
 
 interface Props {
   chips: Chip[];
@@ -45,7 +44,7 @@ const GameHeader = ({
               <CheckIcon/>
             </Box>
           )}
-          {chip.isOut ? <ChipOutIcon/> : <ChipIcon/>}
+          {chip.isOut ? <Image alt="chip out" src="/imgs/chips/chip_aptos_out.svg" width="57px" height="57px" /> : <Image alt="chip" src="/imgs/chips/chip_aptos.svg"  width="57px" height="57px" />}
           <Text
             mt="6px"
             fontWeight="700"

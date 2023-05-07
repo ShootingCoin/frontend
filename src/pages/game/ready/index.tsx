@@ -1,7 +1,8 @@
-import { Box, Text } from "@chakra-ui/react";
+
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect, useMemo, useState } from "react";
+import { Box, Text } from "@chakra-ui/react";
 import Container from "~/src/components/Container";
 import { GameHeader } from "~/src/components/Header";
 import { TokenForm } from "~/src/components/Setting";
@@ -97,7 +98,7 @@ export default function ReadyPage() {
         <NFTCarousel />
 
         <Button
-          onClick={() => push({ pathname: '/game/ready' })}
+          onClick={() => push({ pathname: '/game/ready/position' })}
           margin="64px auto"
         >
           Go to placement

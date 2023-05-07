@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Text } from "@chakra-ui/react";
 import ClipboardIcon from 'public/icons/icon-clipboard.svg';
+import { reduceAddress } from "~/src/utils";
 
 interface Props {
   account: string;
@@ -41,7 +42,7 @@ export default function MypageHeader({ account }: Props) {
           color="#fff"
           float="left"
         >
-          {account.slice(0, 5)}...{account.slice(-3, )}
+          {reduceAddress(account)}
         </Text>
         <ClipboardIcon style={{ margin: '6px 0' }} />
       </Box>
