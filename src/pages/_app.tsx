@@ -1,10 +1,11 @@
 import App from 'next/app';
 import { ChakraProvider } from '@chakra-ui/react'
-import './_app.scss';
+import { GlobalStyle } from '../components/styles/GlobalStyle';
 
 function app({ Component, pageProps }) {
   return (
     <ChakraProvider>
+      <GlobalStyle />
       <Component {...pageProps} />
     </ChakraProvider>
   );

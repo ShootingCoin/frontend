@@ -10,6 +10,7 @@ const HomeHeader = () => {
       display="flex" 
       alignItems="center" 
       w="100%"
+      bg="#090A1E"
       borderBottom="1px solid #515151"
     >
       <Text

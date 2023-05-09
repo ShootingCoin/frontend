@@ -16,7 +16,7 @@ const Button = ({
   onClick,
   ...rest
 }: Props & React.CSSProperties) => {
-  const background = (disabled || isLoading) ? "#78E7FF80" : "#78E7FF";
+  const background = (disabled || isLoading) ? "#71CCFF80" : "#71CCFF";
   return (
     <Btn
       type="button"
@@ -25,8 +25,8 @@ const Button = ({
       maxW="260px"
       w="100%"
       h="60px"
-      fontWeight="700"
-      fontSize="20px"
+      fontWeight="800"
+      fontSize="18px"
       lineHeight="24px"
       color="#000"
       bgColor={background}
