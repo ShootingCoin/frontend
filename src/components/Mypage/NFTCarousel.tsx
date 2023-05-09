@@ -55,7 +55,7 @@ export default function NFTCarousel() {
     let idx = current;
     let isScrolling = false;
     let carousel = document.getElementById('nft-carousel');
-    const margin = document.body.clientWidth < 500 ? (500 - document.body.clientWidth) / 2 : 0;
+    const margin = document.body.clientWidth < 500 ?  (3 * width - document.body.clientWidth) / 2 : (3 * width - 500) / 2;
     carousel.scrollLeft = margin;
 
     const onScroll = throttle((e) => {

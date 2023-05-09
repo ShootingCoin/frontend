@@ -16,7 +16,7 @@ const Button = ({
   onClick,
   ...rest
 }: Props & React.CSSProperties) => {
-  const background = (disabled || isLoading) ? "#71CCFF80" : "#71CCFF";
+  const background = (disabled || isLoading) ? "#8000FF80" : "#8000FF";
   return (
     <Btn
       type="button"
@@ -28,7 +28,7 @@ const Button = ({
       fontWeight="800"
       fontSize="18px"
       lineHeight="24px"
-      color="#000"
+      color="#fff"
       bgColor={background}
       borderRadius="7px"
       sx={rest}

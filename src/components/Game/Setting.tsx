@@ -60,7 +60,7 @@ export default function Setting() {
       ctx.clearRect(0, 0, width, height);
 
       // backdrop
-      ctx.fillStyle="#71CCFF29";
+      ctx.fillStyle="#8000FF29";
       ctx.fillRect(0, height / 2, width, height);
 
       // Draw Egg
