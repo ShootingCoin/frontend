@@ -43,11 +43,16 @@ export default function Game() {
       // Init Eggs (Spawn)
       for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
+          let mass = 1;
+          if (i === 1 && j === 2) {
+            mass = 2;
+          }
           egg_array.push(
             new Egg(
               (0.18 + i * 0.32) * fullW * boardSize, 
               (0.18 + j * 0.32) * fullW * boardSize, 
-              0
+              0,
+              mass,
             )
           );
         }
@@ -175,14 +180,13 @@ export default function Game() {
       let distance = Math.sqrt(drag_x * drag_x + drag_y * drag_y);
       let x_dir = drag_x / distance;
       let y_dir = drag_y / distance;
-      if (distance > 3 * radius) {
-        // push using addForce
-        egg_array[drag_index].addForce(x_dir, y_dir, distance / 5 * 2);
+      
+      // push using addForce
+      egg_array[drag_index].addForce(x_dir, y_dir, distance * 0.2);
 
-        distance = 0;
-        // when push call runPhysics
-        runPhysics(egg_array, radius);
-      }
+      distance = 0;
+      // when push call runPhysics
+      runPhysics(egg_array, radius);
     }
     /* Drag and Drop End */
 

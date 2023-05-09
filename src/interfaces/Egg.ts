@@ -1,10 +1,11 @@
-export default function Egg(x_pos, y_pos, color) {
+export default function Egg(x_pos, y_pos, color, mass) {
   this.x_pos = x_pos;
   this.y_pos = y_pos;
   this.color = color;
   this.x_dir = 0;
   this.y_dir = 0;
   this.speed = 0;
+  this.mass = mass;
   this.friction = 0.1;
   this.isOut = false;
 }

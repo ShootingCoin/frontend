@@ -7,7 +7,7 @@ export default function runPhysics(eggArray, radius) {
       // Egg Move
       eggArray[i].x_pos += eggArray[i].x_dir * eggArray[i].speed;
       eggArray[i].y_pos += eggArray[i].y_dir * eggArray[i].speed;
-      eggArray[i].speed -= 0.1;
+      eggArray[i].speed -= eggArray[i].friction * eggArray[i].mass;
 
       
       for (let j = 0; j < eggArray.length; j++) {
@@ -58,8 +58,8 @@ export default function runPhysics(eggArray, radius) {
             eggArray[i].x_dir = eggArray[i].x_dir - (eggArray[j].x_dir) * cosB;
             eggArray[i].y_dir = eggArray[i].y_dir - (eggArray[j].y_dir) * cosB;
 
-            eggArray[j].speed = eggArray[i].speed * (1 / (cosA * cosA / cosB + cosB));
-            eggArray[i].speed = eggArray[i].speed * (1 / (cosB * cosB / cosA + cosA));
+            eggArray[j].speed = eggArray[i].speed * (1 / (cosA * cosA / cosB + cosB)) * eggArray[i].mass / eggArray[j].mass;
+            eggArray[i].speed = eggArray[i].speed * (1 / (cosB * cosB / cosA + cosA)) * eggArray[j].mass / eggArray[i].mass;
             
           }
         }
