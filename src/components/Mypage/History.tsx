@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Text } from "@chakra-ui/react";
 import ContentWrapper from "./ContentWrapper";
+import { color } from "@comps/styles/common.style";
 
 const history: {
   status: 'win'|'lose',
@@ -38,7 +39,7 @@ export default function History() {
           overflow="hidden"
           bg={data.status === 'win' ? '#203140' : '#3B1422'}
         >
-          <Box w="24px" h="inherit" bgColor={data.status === 'win' ? '#8BF8FF' : '#FF5858'} />
+          <Box w="24px" h="inherit" bgColor={data.status === 'win' ? color.primary.main : '#FF5858'} />
           <Box flex='1' display="flex" flexDirection="column">
             <Text 
               m="auto 8px 4px auto"

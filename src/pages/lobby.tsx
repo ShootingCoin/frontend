@@ -1,15 +1,15 @@
-import { Portal, Text } from '@chakra-ui/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import Button from '../components/Button';
-import Container from '../components/Container';
-import { HomeHeader } from '../components/Header';
-import { Rooms } from '../components/Home';
-import { WalletConnectModal } from '../components/Modal';
+import Button from '@comps/Button';
+import Container from '@comps/Container';
+import { HomeHeader } from '@comps/Header';
+import { Rooms } from '@comps/Lobby';
+import { WalletConnectModal } from '@comps/Modal';
 import { CardTypeEnum } from '../types';
 
-const MainPage = () => {
+
+const LobbyPage = () => {
   const wallet = false;
   const [selected, setSelected] = useState<CardTypeEnum>(CardTypeEnum.Gold);
   const router = useRouter();
@@ -17,7 +17,7 @@ const MainPage = () => {
   return (
     <>
       <Head>
-        <title>Shooting coin</title>
+        <title>Shooting coin: Lobby</title>
       </Head>
       {!wallet && (
         <WalletConnectModal/>
@@ -37,4 +37,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default LobbyPage;

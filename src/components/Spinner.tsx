@@ -1,5 +1,6 @@
 import { Box, keyframes } from "@chakra-ui/react";
 import React from "react";
+import { color } from "./styles/common.style";
 
 interface Props {
   size?: number;
@@ -18,7 +19,7 @@ export default function Spinner({ size=23,  }: Props) {
       h={`${size}px`}
       borderWidth={`${size / 8}px`}
       borderStyle="solid"
-      borderTopColor="#8BF8FF"
+      borderTopColor={color.primary.main}
       borderBottomColor="#FFFFFF80"
       borderLeftColor="#FFFFFF80"
       borderRightColor="#FFFFFF80"

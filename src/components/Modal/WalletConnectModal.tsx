@@ -1,5 +1,6 @@
 import { Box, Button, Portal, Text } from '@chakra-ui/react';
 import React from 'react';
+import { color } from '@comps/styles/common.style';
 
 export default function WalletConnectModal() {
   const buttonList = [
@@ -27,7 +28,7 @@ export default function WalletConnectModal() {
         p="24px"
         maxWidth="452px"
         w="calc(100% - 48px)"
-        bg="#090A1E"
+        bg={color.background.header}
         borderRadius="12px"
       >
         <Text pb="16px" fontWeight="700" fontSize="20px" lineHeight="26px" color="white">
@@ -56,7 +57,7 @@ export default function WalletConnectModal() {
           fontSize="14px" 
           lineHeight="18px" 
           color="#7B8089" 
-          sx={{ '& a': { color: '#8000FF' } }}
+          sx={{ '& a': { color: color.primary.main } }}
         >
             By connecting a wallet, you agree to<br/>
             Shooting Coin’ <a href="terms-of-service">Term of Service</a> and consent to 

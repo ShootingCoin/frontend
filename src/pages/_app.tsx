@@ -1,6 +1,6 @@
 import App from 'next/app';
 import { ChakraProvider } from '@chakra-ui/react'
-import { GlobalStyle } from '../components/styles/GlobalStyle';
+import { GlobalStyle } from '@comps/styles/GlobalStyle';
 
 function app({ Component, pageProps }) {
   return (

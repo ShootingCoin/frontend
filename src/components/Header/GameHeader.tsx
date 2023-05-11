@@ -3,6 +3,7 @@ import React from "react";
 import { Chip } from "~/src/types";
 import CheckIcon from 'public/icons/icon-check.svg';
 import Image from "next/image";
+import { color } from "@comps/styles/common.style";
 
 interface Props {
   chips: Chip[];
@@ -22,6 +23,7 @@ const GameHeader = ({
       display="flex"
       justifyContent="center"
       borderBottom="1px solid #515151"
+      bg={color.background.header}
     >
       {chips.map((chip, i) => (
         <Box 
@@ -33,7 +35,7 @@ const GameHeader = ({
           position="relative"
           textAlign="center"
           borderRadius="7px"
-          bg={chip.isSelected ? '#8BF8FF' : 'transparent'}
+          bg={chip.isSelected ? color.primary.main : 'transparent'}
         >
           {chip.isSelected && (
             <Box

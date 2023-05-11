@@ -1,6 +1,7 @@
 import { Box, Text } from "@chakra-ui/react";
 import React from "react";
 import { reduceAddress } from "~/src/utils";
+import { color } from "@comps/styles/common.style";
 import Spinner from "../Spinner";
 
 interface Props {
@@ -26,8 +27,8 @@ export default function Profile({
             borderRadius="99px"
             background={img ? `url(${img})` : (type === 1 ? "#DE9CFF" : '#FF7A7A')}
             {...isCurrent && {
-              border: '3px solid #8BF8FF',
-              boxShadow: '0px 0px 8px #8BF8FF',
+              border: `3px solid ${color.primary.main}`,
+              boxShadow: `0px 0px 8px ${color.primary.main}`,
             }}
             {...type === 2 && {
               ml: 'auto'

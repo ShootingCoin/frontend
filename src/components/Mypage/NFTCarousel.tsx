@@ -1,6 +1,7 @@
 import { Box, Text } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { throttle } from "lodash";
+import { color } from "@comps/styles/common.style";
 
 const nftList = [
   {
@@ -150,7 +151,7 @@ export default function NFTCarousel() {
                 fontWeight="300"
                 fontSize="13px"
                 lineHeight="15px"
-                color="#8BF8FF"
+                color={color.primary.main}
               >
                 {nft.effect}
               </Text>

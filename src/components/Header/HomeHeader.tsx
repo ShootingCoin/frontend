@@ -1,5 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
 import React from "react";
+import { color } from "@comps/styles/common.style";
 
 const HomeHeader = () => {
   const balance = 12.35;
@@ -10,7 +11,7 @@ const HomeHeader = () => {
       display="flex" 
       alignItems="center" 
       w="100%"
-      bg="#090A1E"
+      bg={color.background.header}
       borderBottom="1px solid #515151"
     >
       <Text

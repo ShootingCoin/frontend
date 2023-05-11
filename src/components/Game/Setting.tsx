@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Box } from "@chakra-ui/react";
-import Egg from "../../interfaces/Egg";
+import Egg from "src/interfaces/Egg";
 import Board from "./Board";
+import { color } from "@comps/styles/common.style";
 
 const fullW = 500;
 const fullH = 500;
@@ -45,7 +46,8 @@ export default function Setting() {
           new Egg(
             (0.14 + i * 0.18) * fullW * boardSize, 
             (0.18 + 0.64 * 5 / 6) * fullW * boardSize, 
-            0
+            0,
+            1
           )
         );
       }
@@ -60,7 +62,7 @@ export default function Setting() {
       ctx.clearRect(0, 0, width, height);
 
       // backdrop
-      ctx.fillStyle="#8000FF29";
+      ctx.fillStyle=`${color.primary.main}29`;
       ctx.fillRect(0, height / 2, width, height);
 
       // Draw Egg

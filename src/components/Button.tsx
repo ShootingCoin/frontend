@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button as Btn } from '@chakra-ui/react';
 import Spinner from './Spinner';
+import { color } from './styles/common.style';
 
 interface Props {
   children: React.ReactNode;
@@ -16,7 +17,7 @@ const Button = ({
   onClick,
   ...rest
 }: Props & React.CSSProperties) => {
-  const background = (disabled || isLoading) ? "#8000FF80" : "#8000FF";
+  const background = (disabled || isLoading) ? `${color.primary.main}80` : color.primary.main;
   return (
     <Btn
       type="button"

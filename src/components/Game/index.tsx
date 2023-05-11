@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Box } from "@chakra-ui/react";
-import Egg from "../../interfaces/Egg";
-import runPhysics from "../../utils/runPhysics";
+import Egg from "src/interfaces/Egg";
+import runPhysics from "src/utils/runPhysics";
 import Board from "./Board";
+import { color } from "@comps/styles/common.style";
 
 const fullW = 500;
 const fullH = 500;
@@ -76,7 +77,7 @@ export default function Game() {
 
         ctx.beginPath();
         const gradient = ctx.createRadialGradient(startX, startY, radius * 0.9, startX, startY, radius * 4);
-        gradient.addColorStop(0, "#8BF8FFF7");
+        gradient.addColorStop(0, `${color.primary.main}F7`);
         gradient.addColorStop(0.5, "transparent");
         ctx.fillStyle = gradient;
         ctx.fillRect(startX - radius * 2, startY - radius * 2, radius * 4, radius * 4);
@@ -84,13 +85,13 @@ export default function Game() {
 
         ctx.beginPath();
         ctx.lineWidth = 2;
-        ctx.strokeStyle = '#8BF8FFF7';
+        ctx.strokeStyle = `${color.primary.main}F7`;
         ctx.moveTo(egg_array[drag_index].x_pos, egg_array[drag_index].y_pos);
         ctx.lineTo(destX, destY);
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.fillStyle="#8BF8FFF7"
+        ctx.fillStyle=`${color.primary.main}F7`;
         ctx.moveTo(
           destX + 10 * Math.cos(rotateAngle - Math.PI / 2) * boardSize, 
           destY + 10 * Math.sin(rotateAngle - Math.PI / 2) * boardSize
