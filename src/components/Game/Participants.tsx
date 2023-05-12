@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Text } from "@chakra-ui/react";
 import ClockIcon from 'public/icons/icon-clock.svg';
 import Profile from "./Profile";
+import { color } from "@comps/styles/common.style";
 
 
 interface Props {
@@ -56,7 +57,7 @@ export default function Participants({
           bottom="-24px"
           left="50%"
           transform="translateX(-50%)"
-          color="#fff"
+          color={color.text.primary}
           fontSize="16px"
           lineHeight="19px"
           textAlign="center"

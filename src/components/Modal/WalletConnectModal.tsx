@@ -42,7 +42,7 @@ export default function WalletConnectModal() {
             mt="16px"
             w="100%"
             height="64px"
-            color="#fff"
+            color={color.text.primary}
             bg="#2D3247"
             fontWeight="800"
             fontSize="18px"

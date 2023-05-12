@@ -36,8 +36,8 @@ const defaultChips: Chip[] = [
   },
 ];
 
-const account = '0xfc960a1de1e0687c7b91bfec9ca0f132b14bf3f2750591dd5c12a389611d4330';
-const player2 = '0xfc960a1de1e0687c7b91bfec9ca0f132b14bf3f2750591dd5c12a389611d4330';
+const account = '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3';
+const player2 = '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3';
 
 const GamePage = () => {
   const [time, setTime] = useState(45);

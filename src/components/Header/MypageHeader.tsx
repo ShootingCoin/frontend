@@ -15,11 +15,13 @@ export default function MypageHeader({ account, balance }: Props) {
     <Box
       as="header"
       bg={color.background.header}
-      color="#fff"
+      color={color.text.primary}
     >
       <Box p="16px 24px" display="flex" alignItems="center">
-        <Link href="/lobby">
-          <Chevron/>
+        <Link href="/lobby" passHref>
+          <a>
+            <Chevron/>
+          </a>
         </Link>
         <Text
           ml="10px"

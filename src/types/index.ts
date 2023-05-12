@@ -18,3 +18,12 @@ export type Chip = {
   isSelected?: boolean;
   isOut?: boolean;
 };
+
+export type HistoryType = {
+  hash: string,
+  opponent: string,
+  status: 'win'|'lose',
+  amount: number,
+  unit: string,
+  date: Date,
+};

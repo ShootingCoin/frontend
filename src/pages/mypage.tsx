@@ -26,7 +26,7 @@ export default function mypage() {
         <title>Shooting coin: mypage</title>
       </Head>
       <Container>
-        <MypageHeader account='0xfc960a1de1e0687c7b91bfec9ca0f132b14bf3f2750591dd5c12a389611d4330' balance={23.45} />
+        <MypageHeader account='0xfs312a2f3E829C0b614566B3E152e417d14q6EP3' balance={23.45} />
         <Navigator current={current} onSelect={(val) => { push({ query: { category: val } }); }} />
         {current === MypageNavigatorEnum.Assets && <Assets />}
         {current === MypageNavigatorEnum.History && <History />}

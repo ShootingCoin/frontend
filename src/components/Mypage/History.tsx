@@ -1,57 +1,103 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Text } from "@chakra-ui/react";
 import ContentWrapper from "./ContentWrapper";
-import { color } from "@comps/styles/common.style";
+import useLayoutConfig from "src/hooks/useLayoutConfig";
+import Image from "next/image";
+import { HistoryType } from "src/types";
+import { HistoryModal } from "../Modal";
+import dayjs from "dayjs";
 
-const history: {
-  status: 'win'|'lose',
-  date: Date,
-}[] = [
+const history: Array<HistoryType> = [
   {
+    hash: '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3',
+    opponent: '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3',
     status: 'win',
+    amount: 32.03,
+    unit: 'ETH',
     date: new Date(),
   },
   {
+    hash: '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3',
+    opponent: '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3',
     status: 'win',
+    amount: 32.03,
+    unit: 'ETH',
     date: new Date(),
   },
   {
+    hash: '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3',
+    opponent: '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3',
     status: 'lose',
+    amount: 32.03,
+    unit: 'ETH',
     date: new Date(),
   },
   {
+    hash: '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3',
+    opponent: '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3',
     status: 'win',
+    amount: 32.03,
+    unit: 'ETH',
     date: new Date(),
   },
 ];
 
 export default function History() {
+  const [selected, setSelected] = useState<HistoryType|null>(null);
+  const [isModal, setIsModal] = useState(false);
+  const { contentAreaHeight } = useLayoutConfig();
   return (
-    <ContentWrapper padding="32px 20px">
-      {history.map((data, i) => (
-        <Box
-          key={`history ${i}`}
-          mb="18px"
-          display="flex"
-          minH="100px"
-          border="1px solid #fff"
-          borderRadius="7px"
-          overflow="hidden"
-          bg={data.status === 'win' ? '#203140' : '#3B1422'}
-        >
-          <Box w="24px" h="inherit" bgColor={data.status === 'win' ? color.primary.main : '#FF5858'} />
-          <Box flex='1' display="flex" flexDirection="column">
-            <Text 
-              m="auto 8px 4px auto"
-              fontWeight="300" 
-              fontSize="12px" 
-              lineHeight="14px"
-            >
-              {data.date.getDate().toString().padStart(2, '0')}.{data.date.getMonth().toString().padStart(2, '0')}.{data.date.getFullYear()}
-            </Text>
+    <>
+    <HistoryModal {...selected} open={isModal} onClose={() => setIsModal(false)}/>
+    <ContentWrapper padding="24px" maxHeight={contentAreaHeight} overflow="scroll">
+      <Box height="fit-content">
+        {history.map((data, i) => (
+          <Box
+            key={`history ${i}`}
+            onClick={() => {
+              setSelected(data);
+              setIsModal(true);
+            }}
+            mb="16px"
+            px="4px"
+            display="flex"
+            borderRadius="12px"
+            overflow="hidden"
+            bg="#1C2241"
+          >
+            <Box mr="auto" p="19px 17px">
+              <Text 
+                fontWeight={700} 
+                fontSize="18px" 
+                lineHeight="26px" 
+                letterSpacing="0.2%" 
+                color={data.status === 'win' ? '#6CD3FF' : '#FF7171'}
+              >
+                You {data.status === 'win' ? 'got' : 'lost'}
+              </Text>
+              <Text
+                mt="4px"
+                fontWeight={700} 
+                fontSize="20px" 
+                lineHeight="26px" 
+                letterSpacing="0.2%" 
+              >
+                {data.amount} {data.unit}
+              </Text>
+              <Text mt="6px" fontWeight={500} fontSize="14px" lineHeight="18px">
+                {dayjs(data.date).format('YYYY.MM.DD')}
+              </Text>
+            </Box>
+            <Image
+              alt={`history-image-${data.status}`}
+              src={`/imgs/img_result_${data.status}_sm.svg`}
+              width={120}
+              height={118}
+            />
           </Box>
-        </Box>
-      ))}
+        ))}
+      </Box>
     </ContentWrapper>
+    </>
   );
 };

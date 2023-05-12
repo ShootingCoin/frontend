@@ -1,6 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
 import React from "react";
-import { reduceAddress } from "~/src/utils";
+import { reduceHashString } from "~/src/utils";
 import { color } from "@comps/styles/common.style";
 import Spinner from "../Spinner";
 
@@ -41,7 +41,7 @@ export default function Profile({
             lineHeight="1.2"
             color="#B0B0B0"
           >
-            {reduceAddress(address)}
+            {reduceHashString(address)}
           </Text>
         </>
       ) : (

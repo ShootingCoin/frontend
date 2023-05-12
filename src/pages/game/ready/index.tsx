@@ -9,6 +9,7 @@ import { TokenForm } from "~/src/components/Setting";
 import NFTCarousel from "~/src/components/Mypage/NFTCarousel";
 import { CardTypeEnum, Chip } from "~/src/types";
 import Button from "~/src/components/Button";
+import { color } from "src/components/styles/common.style";
 
 const defaultChips: Chip[] = [
   {
@@ -78,7 +79,7 @@ export default function ReadyPage() {
             {current === 4 && 'Fifth '}
             Coin
           </Text>
-          <Text my="22px" fontWeight="500" fontSize="16px" lineHeight="19px" color="#fff">
+          <Text my="22px" fontWeight="500" fontSize="16px" lineHeight="19px" color={color.text.primary}>
             Select Token
           </Text>
           <TokenForm

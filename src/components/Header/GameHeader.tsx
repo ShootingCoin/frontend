@@ -52,7 +52,7 @@ const GameHeader = ({
             fontWeight="700"
             fontSize="16px"
             lineHeight="19px"
-            color={chip.isSelected ? '#000' : (chip.isOut ? '#757575' : '#fff')}
+            color={chip.isSelected ? '#000' : (chip.isOut ? '#757575' : color.text.primary)}
           >
             {chip.amount}
           </Text>

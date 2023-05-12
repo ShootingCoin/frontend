@@ -1,3 +1,3 @@
-export function reduceAddress(address: string) {
-  return `${address.slice(0, 5)}...${address.slice(-3, )}`;
+export function reduceHashString(address: string, reduceStart?: number, reduceEnd?: number) {
+  return `${address.slice(0, reduceStart || 5)}...${address.slice((reduceEnd || 3) * -1, )}`;
 };

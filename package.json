@@ -9,6 +9,7 @@
     "@svgr/webpack": "^6.5.1",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "^5.48.1",
+    "dayjs": "^1.11.7",
     "eslint-config-next": "^13.1.2",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-import": "^2.27.4",

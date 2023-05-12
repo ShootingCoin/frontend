@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Input, Select, Text } from '@chakra-ui/react';
 import Image from 'next/image';
+import { color } from '@comps/styles/common.style';
 
 interface Props {
   limit: number;
@@ -44,7 +45,7 @@ export default function TokenForm({
         fontWeight="700"
         fontSize="26px"
         lineHeight="31px"
-        color="#fff"
+        color={color.text.primary}
         maxW="150px"
         border="none"
         sx={{

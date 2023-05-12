@@ -7,6 +7,7 @@ interface Props {
   children: React.ReactNode;
   isLoading?: boolean;
   disabled?: boolean;
+  fullWidth?: boolean;
   onClick: () => void;
 };
 
@@ -15,21 +16,22 @@ const Button = ({
   disabled=false,
   isLoading=false,
   onClick,
+  fullWidth=false,
   ...rest
 }: Props & React.CSSProperties) => {
-  const background = (disabled || isLoading) ? `${color.primary.main}80` : color.primary.main;
+  const background = rest.background ? `${rest.background}`: ((disabled || isLoading) ? `${color.primary.main}80` : color.primary.main);
   return (
     <Btn
       type="button"
       disabled={disabled || isLoading}
       onClick={onClick}
-      maxW="260px"
+      {...!fullWidth && { maxW: '260px' }}
       w="100%"
       h="60px"
       fontWeight="800"
       fontSize="18px"
       lineHeight="24px"
-      color="#fff"
+      color={color.text.primary}
       bgColor={background}
       borderRadius="7px"
       sx={rest}
