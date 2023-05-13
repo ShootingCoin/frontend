@@ -1,6 +1,6 @@
 import { Box, keyframes } from "@chakra-ui/react";
 import React from "react";
-import { color } from "./styles/common.style";
+import { color } from "src/components/styles/common.style";
 
 interface Props {
   size?: number;

@@ -8,6 +8,7 @@ const background = {
 
 const text = {
   primary: '#F0EFF7',
+  secondary: '#1F242C',
   teritary: '#7B8089',
 };
 
@@ -15,4 +16,5 @@ export const color = {
   primary,
   background,
   text,
+  error: '#FF7171',
 };

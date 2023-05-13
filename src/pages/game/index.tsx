@@ -1,8 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-import Button from "~/src/components/Button";
-import Container from "~/src/components/Container";
+import { Button, Container } from "src/components/common";
 import Game from "~/src/components/Game";
 import Participants from "~/src/components/Game/Participants";
 import { GameHeader } from "~/src/components/Header";

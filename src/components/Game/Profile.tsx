@@ -2,7 +2,7 @@ import { Box, Text } from "@chakra-ui/react";
 import React from "react";
 import { reduceHashString } from "~/src/utils";
 import { color } from "@comps/styles/common.style";
-import Spinner from "../Spinner";
+import { Spinner } from "@comps/common";
 
 interface Props {
   address?: string;

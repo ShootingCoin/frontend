@@ -1,8 +1,7 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import Button from '@comps/Button';
-import Container from '@comps/Container';
+import { Button, Container } from '@comps/common';
 import { HomeHeader } from '@comps/Header';
 import { Rooms } from '@comps/Lobby';
 import { WalletConnectModal } from '@comps/Modal';

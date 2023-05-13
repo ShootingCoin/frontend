@@ -1,10 +1,10 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import Container from '@comps/Container';
 import { MypageHeader } from '@comps/Header';
 import { Assets, History, Navigator } from '@comps/Mypage';
 import { MypageNavigatorEnum } from '../types';
+import { Container } from '@comps/common';
 
 export default function mypage() {
   const { query, push } = useRouter();

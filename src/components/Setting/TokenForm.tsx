@@ -23,7 +23,7 @@ export default function TokenForm({
       position="relative"
       display="flex"
       alignItems="center"
-      border="1px solid #fff"
+      border={`1px solid ${isWrong ? color.error : color.text.primary}`}
       borderRadius="8px"
     >
       <Input 
@@ -45,7 +45,7 @@ export default function TokenForm({
         fontWeight="700"
         fontSize="26px"
         lineHeight="31px"
-        color={color.text.primary}
+        color={isWrong ? color.error : color.text.primary}
         maxW="150px"
         border="none"
         sx={{
@@ -95,7 +95,7 @@ export default function TokenForm({
           fontWeight="300"
           fontSize="13px"
           lineHeight="15px"
-          color="#FF7676"
+          color={color.error}
         >
           Can't put more than {limit} in
         </Text>

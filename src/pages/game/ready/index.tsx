@@ -3,13 +3,12 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect, useMemo, useState } from "react";
 import { Box, Text } from "@chakra-ui/react";
-import Container from "~/src/components/Container";
 import { GameHeader } from "~/src/components/Header";
 import { TokenForm } from "~/src/components/Setting";
 import NFTCarousel from "~/src/components/Mypage/NFTCarousel";
 import { CardTypeEnum, Chip } from "~/src/types";
-import Button from "~/src/components/Button";
 import { color } from "src/components/styles/common.style";
+import { Button, Container } from '@comps/common';
 
 const defaultChips: Chip[] = [
   {
@@ -70,16 +69,8 @@ export default function ReadyPage() {
           isSelectable 
           onSelect={(val) => setCurrent(val)} 
         />
-        <Box mx="18px">
-          <Text mt="22px" fontWeight="700" fontSize="22px" lineHeight="26px" color="#8C8C8C">
-            {current === 0 && 'First '}
-            {current === 1 && 'Second '}
-            {current === 2 && 'Third '}
-            {current === 3 && 'Fourth '}
-            {current === 4 && 'Fifth '}
-            Coin
-          </Text>
-          <Text my="22px" fontWeight="500" fontSize="16px" lineHeight="19px" color={color.text.primary}>
+        <Box mt="24px" mx="18px">
+          <Text mb="8px" fontWeight="700" fontSize="20px" lineHeight="26px" color={color.text.primary}>
             Select Token
           </Text>
           <TokenForm
@@ -100,7 +91,7 @@ export default function ReadyPage() {
 
         <Button
           onClick={() => push({ pathname: '/game/ready/position' })}
-          margin="64px auto"
+          margin="45px auto"
         >
           Go to placement
         </Button>

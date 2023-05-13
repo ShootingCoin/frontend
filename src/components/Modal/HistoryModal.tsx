@@ -5,7 +5,7 @@ import { color } from '@comps/styles/common.style';
 import dayjs from 'dayjs';
 import { reduceHashString } from 'src/utils';
 import Image from 'next/image';
-import Button from '@comps/Button';
+import { Button } from '@comps/common';
 
 interface Props {
   open: boolean;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button as Btn } from '@chakra-ui/react';
-import Spinner from './Spinner';
-import { color } from './styles/common.style';
+import { Spinner } from "@comps/common";
+import { color } from '@comps/styles/common.style';
 
 interface Props {
   children: React.ReactNode;
