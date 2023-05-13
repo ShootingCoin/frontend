@@ -7,7 +7,7 @@ import { Button, Container } from "src/components/common";
 import { color } from "src/components/styles/common.style";
 
 const data = {
-  status: 'win', 
+  status: 'lose', 
   amount: 234.09,
   unit: 'ETH',
   price: 127433.433,
@@ -18,7 +18,7 @@ export default function ResultPage() {
   return (
     <>
       <Head>
-        <title>Shooting coin: You {status === 'win' ? 'Win' : 'Lose'}</title>
+        <title>Shooting coin: You {data.status === 'win' ? 'Win' : 'Lose'}</title>
       </Head>
       <Container>
         <Box
@@ -42,10 +42,10 @@ export default function ResultPage() {
             {data.status === 'win' ? 'You got' : 'You lost'}
           </Text>
           <Text mt="4px" fontWeight="700" fontSize="28px" lineHeight="40px" color={color.text.primary}>
-            {data.amount} {data.unit}
+            {data.amount.toLocaleString()} {data.unit}
           </Text>
           <Text mt="4px" fontWeight="500" fontSize="20px" lineHeight="24px" color={color.text.primary}>
-            $ {data.price}
+            $ {data.price.toLocaleString()}
           </Text>
         </Box>
 

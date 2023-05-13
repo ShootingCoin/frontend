@@ -56,7 +56,7 @@ const GameHeader = ({
               lineHeight="16px"
               color={chip.isSelected ? color.text.secondary : (chip.isOut ? '#757575' : color.text.primary)}
             >
-              {chip.amount}
+              {chip.amount.toLocaleString()}
             </Text>
             <Text
               mt='4px'
