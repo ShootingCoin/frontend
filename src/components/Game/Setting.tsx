@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Box } from "@chakra-ui/react";
 import Egg from "src/interfaces/Egg";
-import Board from "./Board";
 import { color } from "@comps/styles/common.style";
+import Img from "next/image";
 
 const fullW = 500;
 const fullH = 500;
@@ -60,10 +60,6 @@ export default function Setting() {
     function updateBoard(){
       // Initialize
       ctx.clearRect(0, 0, width, height);
-
-      // backdrop
-      ctx.fillStyle=`${color.primary.main}29`;
-      ctx.fillRect(0, height / 2, width, height);
 
       // Draw Egg
       for (let i = 0; i < egg_array.length; i++) {
@@ -183,7 +179,20 @@ export default function Setting() {
         height={`${fullH * boardSize}`}
         style={{ position: 'relative', zIndex: 2 }}
       />
-      <Board/>
+      <Box
+        position="absolute"
+        top="0"
+        left="0"
+        w="100%"
+        pt="100%"
+        bg="linear-gradient(transparent 50%, #71CCFF24 calc(50% + 1px))"
+      >
+        <Img
+          alt="board-image"
+          src="/imgs/board/img_board_layer.png"
+          layout="fill"
+        />
+      </Box>
     </Box>
   );
 };

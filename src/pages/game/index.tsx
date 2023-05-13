@@ -2,6 +2,7 @@ import { Box } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { Button, Container } from "src/components/common";
+import { GameExitModal } from "src/components/Modal";
 import Game from "~/src/components/Game";
 import Participants from "~/src/components/Game/Participants";
 import { GameHeader } from "~/src/components/Header";
@@ -40,6 +41,7 @@ const player2 = '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3';
 
 const GamePage = () => {
   const [time, setTime] = useState(45);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -57,7 +59,7 @@ const GamePage = () => {
         <title>Shooting coin</title>
       </Head>
       <Container>
-        <GameHeader chips={defaultChips} />
+        <GameHeader chips={defaultChips} type="game" onExit={() => setIsModalOpen(true)} />
         <Participants 
           player1={account}  
           player2={player2}
@@ -77,6 +79,11 @@ const GamePage = () => {
           READY
         </Button>
       </Container>
+      
+      <GameExitModal 
+        open={isModalOpen} 
+        onClose={() => setIsModalOpen(false)}
+      />
     </>
   );
 };

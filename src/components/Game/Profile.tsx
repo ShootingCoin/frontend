@@ -28,7 +28,7 @@ export default function Profile({
             background={img ? `url(${img})` : (type === 1 ? "#DE9CFF" : '#FF7A7A')}
             {...isCurrent && {
               border: `3px solid ${color.primary.main}`,
-              boxShadow: `0px 0px 8px ${color.primary.main}`,
+              boxShadow: `0px 0px 8px #8BF8FF`,
             }}
             {...type === 2 && {
               ml: 'auto'

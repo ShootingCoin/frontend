@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Box } from "@chakra-ui/react";
 import Egg from "src/interfaces/Egg";
 import runPhysics from "src/utils/runPhysics";
-import Board from "./Board";
 import { color } from "@comps/styles/common.style";
+import Img from "next/image";
 
 const fullW = 500;
 const fullH = 500;
@@ -77,7 +77,7 @@ export default function Game() {
 
         ctx.beginPath();
         const gradient = ctx.createRadialGradient(startX, startY, radius * 0.9, startX, startY, radius * 4);
-        gradient.addColorStop(0, `${color.primary.main}F7`);
+        gradient.addColorStop(0, `${color.skyBlue}F7`);
         gradient.addColorStop(0.5, "transparent");
         ctx.fillStyle = gradient;
         ctx.fillRect(startX - radius * 2, startY - radius * 2, radius * 4, radius * 4);
@@ -85,13 +85,13 @@ export default function Game() {
 
         ctx.beginPath();
         ctx.lineWidth = 2;
-        ctx.strokeStyle = `${color.primary.main}F7`;
+        ctx.strokeStyle = `${color.skyBlue}F7`;
         ctx.moveTo(egg_array[drag_index].x_pos, egg_array[drag_index].y_pos);
         ctx.lineTo(destX, destY);
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.fillStyle=`${color.primary.main}F7`;
+        ctx.fillStyle=`${color.skyBlue}F7`;
         ctx.moveTo(
           destX + 10 * Math.cos(rotateAngle - Math.PI / 2) * boardSize, 
           destY + 10 * Math.sin(rotateAngle - Math.PI / 2) * boardSize
@@ -208,7 +208,22 @@ export default function Game() {
         height={`${fullH * boardSize}`}
         style={{ position: 'relative', zIndex: 2 }}
       />
-      <Board/>
+      <Box
+        position="absolute"
+        top="0"
+        left="0"
+        w="100%"
+        pt="100%"
+        bg="url(/imgs/board/img_game_board.png)"
+        bgSize="contain"
+        backgroundRepeat="no-repeat"
+      >
+        <Img 
+          alt="board-image"
+          src="/imgs/board/img_board_layer.png"
+          layout="fill"
+        />
+      </Box>
     </Box>
   );
 };

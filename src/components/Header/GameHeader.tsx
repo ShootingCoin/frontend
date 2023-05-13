@@ -8,13 +8,17 @@ import HeaderHead from "./HeaderHead";
 interface Props {
   chips: Chip[];
   isSelectable?: boolean;
+  type?: 'setting'|'game';
   onSelect?: (val: number) => void;
+  onExit?: () => void;
 }
 
 const GameHeader = ({
   chips,
   isSelectable=false,
-  onSelect
+  type="setting",
+  onSelect,
+  onExit,
 }: Props) => {
   return (
     <Box
@@ -22,7 +26,12 @@ const GameHeader = ({
       borderBottom="1px solid #515151"
       bg={color.background.header}
     >
-      <HeaderHead title="Game Set" returnUrl="/lobby" />
+      <HeaderHead 
+        title={type ==='game' ? 'Game' : "Game Set"} 
+        returnUrl="/lobby" 
+        exitVisible={type === 'game'}
+        onClickExit={onExit}
+      />
       <Box
         p="20px 10px"
         display="flex"

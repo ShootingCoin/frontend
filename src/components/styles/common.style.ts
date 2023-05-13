@@ -17,4 +17,5 @@ export const color = {
   background,
   text,
   error: '#FF7171',
+  skyBlue: '#71CCFF',
 };
