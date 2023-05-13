@@ -55,5 +55,8 @@ export const GlobalStyle = () => <Global
       background-image: linear-gradient(168.36deg, #0E1159 -12.54%, #090727 9.05%, #07143E 15.49%, #06000C 96.78%) !important;
       font-family: 'Rota', sans-serif !important;
     }
+    body::-webkit-scrollbar {
+      display: none;
+    }
   `}
 />;

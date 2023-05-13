@@ -1,10 +1,9 @@
 import React from "react";
-import Link from "next/link";
 import { Box, Text } from "@chakra-ui/react";
 import { Chip } from "~/src/types";
 import Image from "next/image";
 import { color } from "@comps/styles/common.style";
-import Chevron from 'public/icons/icon-chevron-left.svg';
+import HeaderHead from "./HeaderHead";
 
 interface Props {
   chips: Chip[];
@@ -23,23 +22,7 @@ const GameHeader = ({
       borderBottom="1px solid #515151"
       bg={color.background.header}
     >
-      <Box p="16px 24px" display="flex" alignItems="center">
-        <Link href="/lobby" passHref>
-          <a>
-            <Chevron/>
-          </a>
-        </Link>
-        <Text
-          ml="10px"
-          mr="auto"
-          fontWeight={700}
-          fontSize="20px"
-          lineHeight="26px"
-          color={color.text.primary}
-        >
-          Game Set
-        </Text>
-      </Box>
+      <HeaderHead title="Game Set" returnUrl="/lobby" />
       <Box
         p="20px 10px"
         display="flex"

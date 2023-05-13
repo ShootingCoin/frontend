@@ -5,10 +5,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Box, Text } from "@chakra-ui/react";
 import { GameHeader } from "~/src/components/Header";
 import { TokenForm } from "~/src/components/Setting";
-import NFTCarousel from "~/src/components/Mypage/NFTCarousel";
 import { CardTypeEnum, Chip } from "~/src/types";
 import { color } from "src/components/styles/common.style";
-import { Button, Container } from '@comps/common';
+import { Button, Container, Switch } from '@comps/common';
+import { NFTCarousel } from "src/components/Mypage";
 
 const defaultChips: Chip[] = [
   {
@@ -42,6 +42,7 @@ export default function ReadyPage() {
   const { query, push } = useRouter();
   const [current, setCurrent] = useState(0);
   const [chips, setChips] = useState<Chip[]>(defaultChips);
+  const [isShow, setIsShow] = useState(false);
 
   const limit = useMemo(() => {
     if (query.type) {
@@ -87,11 +88,19 @@ export default function ReadyPage() {
             }}
           />
         </Box>
-        <NFTCarousel />
+        <Box mt="48px" mx="20px" display="flex" alignItems="center">
+          <Text mr="auto" color="#fff" fontWeight="700" fontSize="20px" lineHeight="26px">
+            Select NFTSkin
+          </Text>
+          <Switch onChange={(e) => setIsShow(e.target.checked)} />
+        </Box>
+        <Box {...!isShow && { opacity: '0', pointerEvents: 'none' }}>
+          <NFTCarousel />
+        </Box>
 
         <Button
           onClick={() => push({ pathname: '/game/ready/position' })}
-          margin="45px auto"
+          margin="44px auto 32px auto"
         >
           Go to placement
         </Button>

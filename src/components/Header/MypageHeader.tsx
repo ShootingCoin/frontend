@@ -1,9 +1,7 @@
 import React from "react";
 import { Box, Text } from "@chakra-ui/react";
-import Chevron from 'public/icons/icon-chevron-left.svg';
-import ExitIcon from 'public/icons/icon-exit.svg';
 import { color } from "@comps/styles/common.style";
-import Link from "next/link";
+import HeaderHead from "./HeaderHead";
 
 interface Props {
   account: string;
@@ -17,24 +15,7 @@ export default function MypageHeader({ account, balance }: Props) {
       bg={color.background.header}
       color={color.text.primary}
     >
-      <Box p="16px 24px" display="flex" alignItems="center">
-        <Link href="/lobby" passHref>
-          <a>
-            <Chevron/>
-          </a>
-        </Link>
-        <Text
-          ml="10px"
-          mr="auto"
-          fontWeight={700}
-          fontSize="20px"
-          lineHeight="26px"
-        >
-          My Page
-        </Text>
-        <ExitIcon/>
-      </Box>
-
+      <HeaderHead title="My Page" returnUrl="/lobby" exitVisible />
       <Box
         p="24px"
         display="flex"
