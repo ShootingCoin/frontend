@@ -1,3 +1,5 @@
+import { Chip } from "./types";
+
 export const nftData = [
   {
     id: 0,
@@ -44,4 +46,32 @@ export const nftData = [
     unit: 'APT',
     effect: '10% Speed / 0.3% Size',
   }
+];
+
+export const defaultChips: Chip[] = [
+  {
+    name: 'Aptos',
+    unit: 'APT',
+    amount: 32,
+  },
+  {
+    name: 'Ethereum',
+    unit: 'ETH',
+    amount: 0.32,
+  },
+  {
+    name: 'Aptos',
+    unit: 'APT',
+    amount: 14,
+  },
+  {
+    name: 'Aptos',
+    unit: 'APT',
+    amount: 7,
+  },
+  {
+    name: 'Aptos',
+    unit: 'APT',
+    amount: 5.4,
+  },
 ];

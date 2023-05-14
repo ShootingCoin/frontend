@@ -9,34 +9,7 @@ import { CardTypeEnum, Chip } from "~/src/types";
 import { color } from "src/components/styles/common.style";
 import { Button, Container, Switch } from '@comps/common';
 import { NFTCarousel } from "src/components/Mypage";
-
-const defaultChips: Chip[] = [
-  {
-    name: 'Aptos',
-    unit: 'APT',
-    amount: 32,
-  },
-  {
-    name: 'Ethereum',
-    unit: 'ETH',
-    amount: 0.32,
-  },
-  {
-    name: 'Aptos',
-    unit: 'APT',
-    amount: 14,
-  },
-  {
-    name: 'Aptos',
-    unit: 'APT',
-    amount: 7,
-  },
-  {
-    name: 'Aptos',
-    unit: 'APT',
-    amount: 5.4,
-  },
-];
+import { defaultChips } from "src/dummy";
 
 export default function ReadyPage() {
   const { query, push } = useRouter();

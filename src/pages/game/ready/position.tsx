@@ -4,36 +4,8 @@ import { Box } from "@chakra-ui/react";
 import Participants from "~/src/components/Game/Participants";
 import Setting from "~/src/components/Game/Setting";
 import { GameHeader } from "~/src/components/Header";
-import { Chip } from "~/src/types";
 import { Button, Container } from '@comps/common';
-
-const defaultChips: Chip[] = [
-  {
-    name: 'Aptos',
-    unit: 'APT',
-    amount: 32,
-  },
-  {
-    name: 'Ethereum',
-    unit: 'ETH',
-    amount: 0.32,
-  },
-  {
-    name: 'Aptos',
-    unit: 'APT',
-    amount: 14,
-  },
-  {
-    name: 'Aptos',
-    unit: 'APT',
-    amount: 7,
-  },
-  {
-    name: 'Aptos',
-    unit: 'APT',
-    amount: 5.4,
-  },
-];
+import { defaultChips } from "src/dummy";
 
 const account = '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3';
 const player2 = '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3';
