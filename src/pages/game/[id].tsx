@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { Button, Container } from "src/components/common";
 import { GameExitModal } from "src/components/Modal";
 import { defaultChips } from "src/dummy";
-import { socketClient } from "src/socket";
 import Game from "~/src/components/Game";
 import Participants from "~/src/components/Game/Participants";
 import { GameHeader } from "~/src/components/Header";
@@ -12,13 +11,10 @@ import { GameHeader } from "~/src/components/Header";
 const account = '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3';
 const player2 = '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3';
 
-const GamePage = () => {
+const GamePage = ({ id }) => {
+  console.log(id)
   const [time, setTime] = useState(45);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  socketClient.on('connect', () => {
-    console.log('connected')
-  })
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -66,3 +62,4 @@ const GamePage = () => {
 };
 
 export default GamePage;
+

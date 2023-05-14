@@ -11,13 +11,18 @@ const fullH = 500;
 export default function Game() {
   const [boardSize, setBoardSize] = useState<number>(1 - 40 / 500);
 
-  useEffect(() => {
+  function resize() {
     if (document.body 
       && document.body.clientWidth
       && document.body.clientWidth <= fullW
     ) {
       setBoardSize((document.body.clientWidth - 40) / fullW);
     }
+  }
+  useEffect(() => {
+    resize();
+    window.addEventListener('resize', resize);
+    return () => window.removeEventListener('resize', resize);
   }, []);
 
   useEffect(() => {
