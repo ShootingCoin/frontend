@@ -12,7 +12,6 @@ const account = '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3';
 const player2 = '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3';
 
 const GamePage = ({ id }) => {
-  console.log(id)
   const [time, setTime] = useState(45);
   const [isModalOpen, setIsModalOpen] = useState(false);
 

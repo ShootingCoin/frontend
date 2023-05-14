@@ -25,7 +25,6 @@ export default function Rooms({ selected, onSelect }: Props) {
     let carousel = document.getElementById('room-carousel');
     const margin = document.body.clientWidth < 500 ? (3 * width - document.body.clientWidth) / 2 : (3 * width - 500) / 2;
     carousel.scrollLeft = margin;
-    console.log(margin)
 
     const onScroll = throttle((e) => {
       e.preventDefault();

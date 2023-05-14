@@ -1,13 +1,18 @@
 import { Box, Button, Portal, Text } from '@chakra-ui/react';
 import React from 'react';
 import { color } from '@comps/styles/common.style';
+import { useConnect } from 'wagmi';
+import { InjectedConnector } from '@wagmi/core';
 
 export default function WalletConnectModal() {
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  });
   const buttonList = [
     {
       name: 'MetaMask',
       icon: '/imgs/wallets/metamask.svg',
-      onClick: () => {}
+      onClick: () => connect(),
     }
   ];
   return (

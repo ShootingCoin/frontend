@@ -6,10 +6,11 @@ import { HomeHeader } from '@comps/Header';
 import { Rooms } from '@comps/Lobby';
 import { WalletConnectModal } from '@comps/Modal';
 import { CardTypeEnum } from '../types';
+import useWallet from 'src/hooks/useWallet';
 
 
 const LobbyPage = () => {
-  const wallet = false;
+  const { address } = useWallet();
   const [selected, setSelected] = useState<CardTypeEnum>(CardTypeEnum.Gold);
   const router = useRouter();
   
@@ -18,14 +19,14 @@ const LobbyPage = () => {
       <Head>
         <title>Shooting coin: Lobby</title>
       </Head>
-      {!wallet && (
+      {!address && (
         <WalletConnectModal/>
       )}
       <Container>
         <HomeHeader />        
         <Rooms selected={selected} onSelect={setSelected} />
         <Button 
-          disabled={!wallet}
+          disabled={!address}
           margin="auto auto 72px auto"
           onClick={() => router.push({ pathname: '/game/ready', query: { type: selected } })}
         >

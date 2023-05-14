@@ -4,6 +4,8 @@ import { GlobalStyle } from '@comps/styles/GlobalStyle';
 import React, { useEffect } from 'react';
 import { RecoilRoot, useRecoilState } from 'recoil';
 import { uuidState } from 'src/recoil/socket';
+import { WagmiConfig } from 'wagmi';
+import { client } from 'src/hooks/useWallet';
 
 let socket;
 
@@ -13,13 +15,13 @@ function WebSocketInitializer({ children }: { children: React.ReactNode }) {
     socket = new WebSocket(`${process.env.BE_ORIGIN}/v1/ws`);
   
     socket.addEventListener('open', function (event) {
-      console.log('connected');
+      console.log('ws connected');
     });
 
     socket.addEventListener('message', function (event) {
       setSocketId(event.data);
     });
-  }
+  };
 
   useEffect(() => socketInitializer(), []);
   return (
@@ -32,12 +34,14 @@ function WebSocketInitializer({ children }: { children: React.ReactNode }) {
 function app({ Component, pageProps }) {
   return (
     <ChakraProvider>
-      <RecoilRoot>
-        <GlobalStyle />
-        <WebSocketInitializer>
-          <Component {...pageProps} />
-        </WebSocketInitializer>
-      </RecoilRoot>
+      <WagmiConfig client={client}>
+        <RecoilRoot>
+          <GlobalStyle />
+          <WebSocketInitializer>
+            <Component {...pageProps} />
+          </WebSocketInitializer>
+        </RecoilRoot>
+      </WagmiConfig>
     </ChakraProvider>
   );
 }
