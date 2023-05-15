@@ -1,12 +1,27 @@
 import { Box, Portal, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { ReactNode } from "react";
 import { Button } from "../common";
 import { color } from "../styles/common.style";
 
+interface Props {
+  open: boolean;
+  title?: ReactNode;
+  description?: ReactNode;
+  closeText?: ReactNode;
+  exitText?: ReactNode;
+  onExit: () => void;
+  onClose: () => void;
+};
+
 export default function GameExitModal({
   open,
+  title=<>Do you really want to<br/>end the game?</>,
+  description=<>The lost coins will be given to<br/>the other partygame?</>,
+  closeText=<>Staying in the game</>,
+  exitText=<>Quit the game</>,
+  onExit,
   onClose,
-}) {
+}: Props) {
   if (!open) return <></>;
   return (
     <Portal>
@@ -34,28 +49,26 @@ export default function GameExitModal({
         borderRadius="12px"
       >
         <Text fontWeight="700" fontSize="20px" lineHeight="24px">
-          Do you really want to<br/>
-          end the game?
+          {title}
         </Text>
         <Text mt="16px" fontWeight="500" fontSize="17px" lineHeight="20px">
-          The lost coins will be given to<br/>
-          the other partygame?
+          {description}
         </Text>
         <Button 
-          onClick={() => {}}
+          onClick={onClose}
           fullWidth 
           marginTop="24px"
         >
-          Staying in the game
+          {closeText}
         </Button>
 
         <Button 
-          onClick={() => {}} 
+          onClick={onExit} 
           fullWidth  
           marginTop="12px"
           background="#2D3247"
         >
-          Quit the game
+          {exitText}
         </Button>
       </Box>
     </Portal>

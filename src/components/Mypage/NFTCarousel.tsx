@@ -20,10 +20,10 @@ export default function NFTCarousel({ initialShow }: { initialShow?: number }) {
     const onScroll = throttle((e) => {
       e.preventDefault();
       if (!isScrolling) {
-        idx = Math.round(carousel.scrollLeft / width);
-        if (idx >= nftData.length) {
-          idx = nftData.length - 1;
-        }
+        const newIdx =  Math.round(carousel.scrollLeft / width);
+        if (newIdx > idx) idx += 1;
+        else if (newIdx < idx) idx -= 1;
+        if (idx >= nftData.length) idx = nftData.length - 1;
         setCurrent(nftData[idx].id);
         carousel.scrollLeft = idx * width + margin;
         isScrolling = true;
@@ -43,9 +43,11 @@ export default function NFTCarousel({ initialShow }: { initialShow?: number }) {
     <Box 
       id="nft-carousel"
       py="20px" 
+      position="relative"
       display="flex"
       overflowX="scroll"
       sx={{
+        scrollBehavior: 'smooth',
         '&::-webkit-scrollbar': {
           display: 'none'
         },

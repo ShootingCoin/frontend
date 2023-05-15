@@ -82,7 +82,7 @@ export default function Game() {
 
         ctx.beginPath();
         const gradient = ctx.createRadialGradient(startX, startY, radius * 0.9, startX, startY, radius * 4);
-        gradient.addColorStop(0, `${color.skyBlue}F7`);
+        gradient.addColorStop(0, `${color.primary.main}F7`);
         gradient.addColorStop(0.5, "transparent");
         ctx.fillStyle = gradient;
         ctx.fillRect(startX - radius * 2, startY - radius * 2, radius * 4, radius * 4);
@@ -90,13 +90,13 @@ export default function Game() {
 
         ctx.beginPath();
         ctx.lineWidth = 2;
-        ctx.strokeStyle = `${color.skyBlue}F7`;
+        ctx.strokeStyle = `${color.primary.main}F7`;
         ctx.moveTo(egg_array[drag_index].x_pos, egg_array[drag_index].y_pos);
         ctx.lineTo(destX, destY);
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.fillStyle=`${color.skyBlue}F7`;
+        ctx.fillStyle=`${color.primary.main}F7`;
         ctx.moveTo(
           destX + 10 * Math.cos(rotateAngle - Math.PI / 2) * boardSize, 
           destY + 10 * Math.sin(rotateAngle - Math.PI / 2) * boardSize
@@ -188,7 +188,7 @@ export default function Game() {
       let y_dir = drag_y / distance;
       
       // push using addForce
-      egg_array[drag_index].addForce(x_dir, y_dir, distance * 0.2);
+      egg_array[drag_index].addForce(x_dir, y_dir, distance * 0.3);
 
       distance = 0;
       // when push call runPhysics

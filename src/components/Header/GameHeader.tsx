@@ -10,6 +10,7 @@ interface Props {
   isSelectable?: boolean;
   type?: 'setting'|'game';
   onSelect?: (val: number) => void;
+  onReturn?: () => void;
   onExit?: () => void;
 }
 
@@ -18,6 +19,7 @@ const GameHeader = ({
   isSelectable=false,
   type="setting",
   onSelect,
+  onReturn,
   onExit,
 }: Props) => {
   return (
@@ -30,6 +32,9 @@ const GameHeader = ({
         title={type ==='game' ? 'Game' : "Game Set"} 
         returnUrl="/lobby" 
         exitVisible={type === 'game'}
+        {...onReturn && {
+          onClickReturn: onReturn,
+        }}
         onClickExit={onExit}
       />
       <Box

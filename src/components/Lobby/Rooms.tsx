@@ -55,6 +55,7 @@ export default function Rooms({ selected, onSelect }: Props) {
       overflowX="scroll"
       transition="1s"
       sx={{
+        scrollBehavior: 'smooth',
         '&::-webkit-scrollbar': {
           display: 'none'
         }

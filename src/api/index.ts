@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-const BE_ORIGIN = process.env.BE_ORIGIN;
+const HTTP_ORIGIN = process.env.HTTP_ORIGIN;
 
 const match = async (price: number, uuid: string) => {
-  await axios.post(`${BE_ORIGIN}/v1/match`, {
+  await axios.post(`${HTTP_ORIGIN}/v1/match`, {
     price,
     uuid,
   });

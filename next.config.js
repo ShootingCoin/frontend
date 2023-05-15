@@ -1,6 +1,7 @@
 module.exports = {
   env: {
-    BE_ORIGIN: process.env.BE_ORIGIN,
+    WS_ORIGIN: process.env.WS_ORIGIN,
+    HTTP_ORIGIN: process.env.HTTP_ORIGIN,
   },
   webpack(config) {
     config.module.rules.push({

@@ -12,13 +12,14 @@ let socket;
 function WebSocketInitializer({ children }: { children: React.ReactNode }) {
   const [, setSocketId] = useRecoilState(uuidState);
   const socketInitializer = () => {
-    socket = new WebSocket(`${process.env.BE_ORIGIN}/v1/ws`);
+    socket = new WebSocket(`${process.env.WS_ORIGIN}/v1/ws`);
   
     socket.addEventListener('open', function (event) {
       console.log('ws connected');
     });
 
     socket.addEventListener('message', function (event) {
+      console.log(event);
       setSocketId(event.data);
     });
   };

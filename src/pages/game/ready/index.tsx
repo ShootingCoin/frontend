@@ -10,9 +10,14 @@ import { color } from "src/components/styles/common.style";
 import { Button, Container, Switch } from '@comps/common';
 import { NFTCarousel } from "src/components/Mypage";
 import { defaultChips } from "src/dummy";
+import { useRecoilValue } from "recoil";
+import { uuidState } from "src/recoil/socket";
+import axios from "axios";
+import api from "src/api";
 
 export default function ReadyPage() {
   const { query, push } = useRouter();
+  const uuid = useRecoilValue(uuidState);
   const [current, setCurrent] = useState(0);
   const [chips, setChips] = useState<Chip[]>(defaultChips);
   const [isShow, setIsShow] = useState(false);
@@ -31,6 +36,10 @@ export default function ReadyPage() {
   useEffect(() => {
     setChips(chips.map((x, i) => ({ ...x, isSelected: current === i })));
   }, [current]);
+
+  const handleClickReady = async () => {
+    await api.match(1000, uuid);
+  };
 
   return (
     <>
@@ -72,7 +81,7 @@ export default function ReadyPage() {
         </Box>
 
         <Button
-          onClick={() => push({ pathname: '/game/ready/position' })}
+          onClick={handleClickReady}
           margin="44px auto 32px auto"
         >
           Go to placement

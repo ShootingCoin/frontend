@@ -9,6 +9,7 @@ interface Props {
   title: string;
   returnUrl: string;
   exitVisible?: boolean;
+  onClickReturn?: () => void;
   onClickExit?: () => void;
 };
 
@@ -16,15 +17,22 @@ export default function HeaderHead({
   title,
   returnUrl,
   exitVisible=false,
+  onClickReturn,
   onClickExit,
 }: Props) {
   return (
     <Box p="16px 24px" display="flex" alignItems="center">
-      <Link href={returnUrl} passHref>
-        <a>
+      {onClickReturn ? (
+        <Box onClick={onClickReturn}>
           <Chevron/>
-        </a>
-      </Link>
+        </Box>
+      ) : (
+        <Link href={returnUrl} passHref>
+          <a>
+            <Chevron/>
+          </a>
+        </Link>
+      )}
       <Text
         ml="10px"
         mr="auto"

@@ -6,12 +6,16 @@ import Setting from "~/src/components/Game/Setting";
 import { GameHeader } from "~/src/components/Header";
 import { Button, Container } from '@comps/common';
 import { defaultChips } from "src/dummy";
+import { useRouter } from "next/router";
+import { GameExitModal } from "src/components/Modal";
 
 const account = '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3';
 const player2 = '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3';
 
-const GamePage = () => {
+const GameSettingPage = () => {
+  const router = useRouter();
   const [time, setTime] = useState(45);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -29,7 +33,10 @@ const GamePage = () => {
         <title>Shooting coin</title>
       </Head>
       <Container>
-        <GameHeader chips={defaultChips} />
+        <GameHeader 
+          chips={defaultChips} 
+          onReturn={() => setIsModalOpen(true)} 
+        />
         <Participants 
           player1={account}  
           player2={player2}
@@ -49,8 +56,19 @@ const GamePage = () => {
           READY
         </Button>
       </Container>
+      <GameExitModal
+        open={isModalOpen} 
+        title={<>Do you want to get out of the<br/>game now?</>}
+        description={<>If you go out now, it might take a long time<br/>to assign a new game.</>}
+        exitText={<>Leave Now</>}
+        onExit={() => {
+          setIsModalOpen(false);
+          router.push('/lobby');
+        }}
+        onClose={() => setIsModalOpen(false)}
+      />
     </>
   );
 };
 
-export default GamePage;
+export default GameSettingPage;
