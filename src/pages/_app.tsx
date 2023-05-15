@@ -3,24 +3,30 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { GlobalStyle } from '@comps/styles/GlobalStyle';
 import React, { useEffect } from 'react';
 import { RecoilRoot, useRecoilState } from 'recoil';
-import { uuidState } from 'src/recoil/socket';
+import { matchIdState, uuidState } from 'src/recoil/socket';
 import { WagmiConfig } from 'wagmi';
 import { client } from 'src/hooks/useWallet';
 
 let socket;
 
 function WebSocketInitializer({ children }: { children: React.ReactNode }) {
-  const [, setSocketId] = useRecoilState(uuidState);
+  const [socketId, setSocketId] = useRecoilState(uuidState);
+  const [, setMatchId] = useRecoilState(matchIdState);
   const socketInitializer = () => {
     socket = new WebSocket(`${process.env.WS_ORIGIN}/v1/ws`);
+    let socketType = 'connect';
   
     socket.addEventListener('open', function (event) {
       console.log('ws connected');
     });
 
     socket.addEventListener('message', function (event) {
-      console.log(event);
-      setSocketId(event.data);
+      if (socketType === 'connect') {
+        socketType = 'match';
+        setSocketId(event.data);
+      } else if (socketType === 'match') {
+        setMatchId(event.data);
+      }
     });
   };
 
@@ -40,6 +46,7 @@ function app({ Component, pageProps }) {
           <GlobalStyle />
           <WebSocketInitializer>
             <Component {...pageProps} />
+            <div id="modal-portal"/>
           </WebSocketInitializer>
         </RecoilRoot>
       </WagmiConfig>

@@ -8,12 +8,14 @@ import { Button, Container } from '@comps/common';
 import { defaultChips } from "src/dummy";
 import { useRouter } from "next/router";
 import { GameExitModal } from "src/components/Modal";
+import useLoading from "src/hooks/useLoading";
 
 const account = '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3';
 const player2 = '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3';
 
 const GameSettingPage = () => {
   const router = useRouter();
+  const { isLoading } = useLoading();
   const [time, setTime] = useState(45);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -50,8 +52,10 @@ const GameSettingPage = () => {
         </Box>
         <Button
           margin="36px auto 72px auto"
-          onClick={() => {}}
-          isLoading
+          onClick={() => {
+            router.push(`/game/${router.query.id}`)
+          }}
+          isLoading={isLoading}
         >
           READY
         </Button>

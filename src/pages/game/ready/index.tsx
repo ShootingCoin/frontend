@@ -11,13 +11,15 @@ import { Button, Container, Switch } from '@comps/common';
 import { NFTCarousel } from "src/components/Mypage";
 import { defaultChips } from "src/dummy";
 import { useRecoilValue } from "recoil";
-import { uuidState } from "src/recoil/socket";
-import axios from "axios";
+import { matchIdState, uuidState } from "src/recoil/socket";
 import api from "src/api";
+import useLoading from "src/hooks/useLoading";
 
 export default function ReadyPage() {
   const { query, push } = useRouter();
+  const { setIsLoading, LoadingDialog } = useLoading();
   const uuid = useRecoilValue(uuidState);
+  const matchId = useRecoilValue(matchIdState);
   const [current, setCurrent] = useState(0);
   const [chips, setChips] = useState<Chip[]>(defaultChips);
   const [isShow, setIsShow] = useState(false);
@@ -33,19 +35,31 @@ export default function ReadyPage() {
     return 20;
   }, [query]);
 
+  const handleClickReady = async () => {
+    if (uuid) {
+      setIsLoading(true);
+      await api.match(1000, uuid);
+    }
+  };
+
   useEffect(() => {
     setChips(chips.map((x, i) => ({ ...x, isSelected: current === i })));
   }, [current]);
 
-  const handleClickReady = async () => {
-    await api.match(1000, uuid);
-  };
+  useEffect(() => {
+    console.log(matchId)
+    if (matchId) {
+      setIsLoading(false);
+      push(`/game/${matchId}/setting`);
+    }
+  }, [matchId]);
 
   return (
     <>
       <Head>
         <title>Shooting coin: Ready</title>
       </Head>
+      <LoadingDialog />
       <Container>
         <GameHeader 
           chips={chips} 
