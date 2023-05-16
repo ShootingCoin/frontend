@@ -47,16 +47,13 @@ export default function Game() {
 
     function init(){
       // Init Eggs (Spawn)
-      for (let i = 0; i < 3; i++) {
-        for (let j = 0; j < 3; j++) {
+      for (let i = 0; i < 5; i++) {
+        for (let j = 0; j < 2; j++) {
           let mass = 1;
-          if (i === 1 && j === 2) {
-            mass = 2;
-          }
           egg_array.push(
             new Egg(
-              (0.18 + i * 0.32) * fullW * boardSize, 
-              (0.18 + j * 0.32) * fullW * boardSize, 
+              (0.14 + i * 0.18) * fullW * boardSize, 
+              (0.18 + 0.64 / 6 + 0.64 * 4 / 6 * j) * fullW * boardSize, 
               0,
               mass,
             )
@@ -149,6 +146,12 @@ export default function Game() {
           dragging = true;
           drag_x = egg_array[i].x_pos - canvas_x;
           drag_y = egg_array[i].y_pos - canvas_y;
+          let distance = Math.sqrt(drag_x * drag_x + drag_y * drag_y);
+          
+          if (distance > 150 * boardSize) {
+            drag_x *= 150 * boardSize / distance;
+            drag_y *= 150 * boardSize / distance;
+          }
           drag_index = i;
         }
       }
@@ -174,6 +177,13 @@ export default function Game() {
       let canvas_y = (clientY - canvas_blank.top) * ((c as HTMLCanvasElement).height / canvas_blank.height);
       drag_x = egg_array[drag_index].x_pos - canvas_x;
       drag_y = egg_array[drag_index].y_pos - canvas_y;
+
+      let distance = Math.sqrt(drag_x * drag_x + drag_y * drag_y);
+
+      if (distance > 150 * boardSize) {
+        drag_x *= 150 * boardSize / distance;
+        drag_y *= 150 * boardSize / distance;
+      }
     }
 
     function mouseUpListener(evt) {

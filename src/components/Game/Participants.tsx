@@ -54,7 +54,7 @@ export default function Participants({
       {isMatching && (
         <Text 
           position="absolute"
-          bottom="-24px"
+          bottom="-36px"
           left="50%"
           transform="translateX(-50%)"
           color={color.text.primary}

@@ -14,19 +14,17 @@ function WebSocketInitializer({ children }: { children: React.ReactNode }) {
   const [, setMatchId] = useRecoilState(matchIdState);
   const socketInitializer = () => {
     socket = new WebSocket(`${process.env.WS_ORIGIN}/v1/ws`);
-    let socketType = 'connect';
+    // let socketType = 'connect';
   
     socket.addEventListener('open', function (event) {
       console.log('ws connected');
     });
 
     socket.addEventListener('message', function (event) {
-      if (socketType === 'connect') {
-        socketType = 'match';
-        setSocketId(event.data);
-      } else if (socketType === 'match') {
-        setMatchId(event.data);
-      }
+      const data = JSON.parse(event.data);
+
+      if (data.type === 'wsId') setSocketId(data.content);
+      if (data.type === 'gameId') setMatchId(data.content);
     });
   };
 
