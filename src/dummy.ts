@@ -1,5 +1,8 @@
 import { Chip } from "./types";
 
+export const account = '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3';
+export const player2 = '0xdc7Fde0a2f3E829C0b614566B3E152515f3E82v7';
+
 export const nftData = [
   {
     id: 0,

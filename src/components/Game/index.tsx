@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Box } from "@chakra-ui/react";
-import Egg from "src/interfaces/Egg";
 import runPhysics from "src/utils/runPhysics";
 import { color } from "@comps/styles/common.style";
 import Img from "next/image";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { currentSituationState, eggsState, isLoadingState, isMyTurnState } from "src/recoil/game";
+import { uuidState, webSocketState } from "src/recoil/socket";
+import Egg from "src/interfaces/Egg";
 
 const fullW = 500;
 const fullH = 500;
 
 export default function Game() {
+  const webSocket = useRecoilValue(webSocketState);
+  const uuid = useRecoilValue(uuidState);
+  const [eggs, setEggs] = useRecoilState(eggsState);
+  const [currentSituation, setCurrentSituation] = useRecoilState(currentSituationState);
+  const [isMyTurn, setIsMyTurn] = useRecoilState(isMyTurnState);
+  const [isLoading, setIsLoading] = useRecoilState(isLoadingState);
   const [boardSize, setBoardSize] = useState<number>(1 - 40 / 500);
 
   function resize() {
@@ -47,19 +56,28 @@ export default function Game() {
 
     function init(){
       // Init Eggs (Spawn)
-      for (let i = 0; i < 5; i++) {
-        for (let j = 0; j < 2; j++) {
-          let mass = 1;
-          egg_array.push(
-            new Egg(
-              (0.14 + i * 0.18) * fullW * boardSize, 
-              (0.18 + 0.64 / 6 + 0.64 * 4 / 6 * j) * fullW * boardSize, 
-              0,
-              mass,
-            )
-          );
-        }
-      }
+      egg_array = eggs.map(x => new Egg({
+        ...x,
+        x_pos: x.x_pos * boardSize,
+        y_pos: x.y_pos * boardSize,
+      }));
+      console.log('initialized')
+
+      runPhysics(
+        egg_array, 
+        radius, 
+        width, 
+        (val) => {
+          setIsLoading(false);
+          setCurrentSituation(JSON.parse(JSON.stringify(
+            val
+          )).map(x => ({
+            ...x,
+            x_pos: x.x_pos / boardSize,
+            y_pos: x.y_pos / boardSize,
+          })),)
+        },
+      );
       // Mouse Event Init
       c.addEventListener("mousedown", mouseDownListener, false);
       c.addEventListener("touchstart", mouseDownListener, false);
@@ -70,7 +88,11 @@ export default function Game() {
       ctx.clearRect(0, 0, width, height);
 
       // Draw Shooting Range
-      if (dragging == true) {
+      if (
+        dragging == true &&
+        // for demo
+        egg_array[drag_index].account === uuid
+      ) {
         const rotateAngle = drag_x >= 0 ? Math.atan(drag_y / drag_x) : Math.atan(drag_y / drag_x) + Math.PI;
         const startX = egg_array[drag_index].x_pos;
         const startY = egg_array[drag_index].y_pos;
@@ -111,11 +133,13 @@ export default function Game() {
 
       // Draw Egg
       for (let i = 0; i < egg_array.length; i++) {
-        ctx.beginPath();
-        let image = new Image();
-        image.src = '/imgs/chips/chip_aptos.svg';
+        if (!egg_array[i].isOut) {
+          ctx.beginPath();
+          let image = new Image();
+          image.src = '/imgs/chips/chip_aptos.svg';
 
-        ctx.drawImage(image, egg_array[i].x_pos - radius, egg_array[i].y_pos - radius, radius * 2, radius * 2);
+          ctx.drawImage(image, egg_array[i].x_pos - radius, egg_array[i].y_pos - radius, radius * 2, radius * 2);
+        }
       }
     }
 
@@ -193,6 +217,8 @@ export default function Game() {
       window.removeEventListener("touchend", mouseUpListener, false);
 
       dragging = false;
+      if (egg_array[drag_index].account !== uuid) return;
+
       let distance = Math.sqrt(drag_x * drag_x + drag_y * drag_y);
       let x_dir = drag_x / distance;
       let y_dir = drag_y / distance;
@@ -200,9 +226,37 @@ export default function Game() {
       // push using addForce
       egg_array[drag_index].addForce(x_dir, y_dir, distance * 0.3);
 
+      webSocket.send(JSON.stringify({
+        state: 'action',
+        data: JSON.parse(JSON.stringify(
+            egg_array
+          )).map(x => ({
+            ...x,
+            x_pos: x.x_pos / boardSize,
+            y_pos: x.y_pos / boardSize,
+          })),
+      }));
+      setIsLoading(true);
+
       distance = 0;
       // when push call runPhysics
-      runPhysics(egg_array, radius);
+      runPhysics(
+        egg_array, 
+        radius, 
+        width, 
+        (val) => {
+          const newVal = JSON.parse(JSON.stringify(
+            val
+          )).map(x => ({
+            ...x,
+            x_pos: x.x_pos / boardSize,
+            y_pos: x.y_pos / boardSize,
+          }));
+          setEggs(newVal);
+          setCurrentSituation(newVal);
+          setIsMyTurn(false);
+        }
+      );
     }
     /* Drag and Drop End */
 
@@ -214,9 +268,19 @@ export default function Game() {
       c.removeEventListener("mousedown", mouseDownListener, false);
       c.removeEventListener("touchstart", mouseDownListener, false);
     }
-  }, [boardSize]);
+  }, [boardSize, eggs]);
+
+  useEffect(() => {
+    
+  }, []);
+
   return (
-    <Box position="relative">
+    <Box 
+      position="relative"
+      sx={{ 
+        ...(isLoading || !isMyTurn) && { '& #game': { pointerEvents: 'none' } }
+      }}
+    >
       <canvas
         id="game" 
         width={`${fullW * boardSize}`} 

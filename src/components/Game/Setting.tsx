@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Box } from "@chakra-ui/react";
 import Egg from "src/interfaces/Egg";
-import { color } from "@comps/styles/common.style";
 import Img from "next/image";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { eggsState } from "src/recoil/game";
+import { uuidState } from "src/recoil/socket";
 
 const fullW = 500;
 const fullH = 500;
 
 export default function Setting() {
+  const uuid = useRecoilValue(uuidState);
+  const [, setEggs] = useRecoilState(eggsState);
   const [boardSize, setBoardSize] = useState<number>(1 - 40 / 500);
 
   useEffect(() => {
@@ -18,6 +22,8 @@ export default function Setting() {
       setBoardSize((document.body.clientWidth - 40) / fullW);
     }
   }, []);
+
+  
 
   useEffect(() => {
     /* Canvas Setting */
@@ -43,14 +49,25 @@ export default function Setting() {
       // Init Eggs (Spawn)
       for (let i = 0; i < 5; i++) {
         egg_array.push(
-          new Egg(
-            (0.14 + i * 0.18) * fullW * boardSize, 
-            (0.18 + 0.64 * 5 / 6) * fullW * boardSize, 
-            0,
-            1
-          )
+          new Egg({
+            idx: i,
+            x_pos: (0.14 + i * 0.18) * fullW * boardSize, 
+            y_pos: (0.18 + 0.64 * 5 / 6) * fullW * boardSize, 
+            color: 0,
+            mass: 1,
+            account: uuid,
+          })
         );
       }
+      setEggs(
+        JSON.parse(JSON.stringify(
+          egg_array
+        )).map(x => ({
+          ...x,
+          x_pos: x.x_pos / boardSize,
+          y_pos: x.y_pos / boardSize,
+        }))
+      );
       // Mouse Event Init
       c.addEventListener("mousedown", mouseDownListener, false);
       c.addEventListener("touchstart", mouseDownListener, false);
@@ -99,6 +116,7 @@ export default function Setting() {
           drag_index = i;
         }
       }
+
       if (dragging) {
         window.addEventListener("mousemove", mouseMoveListener, false);
         window.addEventListener("mouseup", mouseUpListener, false);
@@ -155,6 +173,15 @@ export default function Setting() {
     }
 
     function mouseUpListener(evt) {
+      setEggs(
+        JSON.parse(JSON.stringify(
+          egg_array
+        )).map(x => ({
+          ...x,
+          x_pos: x.x_pos / boardSize,
+          y_pos: x.y_pos / boardSize,
+        }))
+      );
       window.removeEventListener("mousemove", mouseMoveListener, false);
       window.removeEventListener("mouseup", mouseUpListener, false);
       window.removeEventListener("touchmove", mouseMoveListener, false);

@@ -1,13 +1,27 @@
-export default function Egg(x_pos, y_pos, color, mass) {
+export default function Egg({
+  idx,
+  x_pos,
+  y_pos,
+  color,
+  x_dir = 0,
+  y_dir = 0,
+  speed = 0,
+  mass,
+  friction = 0.1,
+  account,
+  isOut = false,
+}) {
+  this.idx = idx;
   this.x_pos = x_pos;
   this.y_pos = y_pos;
   this.color = color;
-  this.x_dir = 0;
-  this.y_dir = 0;
-  this.speed = 0;
+  this.x_dir = x_dir;
+  this.y_dir = y_dir;
+  this.speed = speed;
   this.mass = mass;
-  this.friction = 0.1;
-  this.isOut = false;
+  this.friction = friction;
+  this.account = account;
+  this.isOut = isOut;
 }
 
 // push using addForce

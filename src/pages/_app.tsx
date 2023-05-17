@@ -2,19 +2,28 @@ import App from 'next/app';
 import { ChakraProvider } from '@chakra-ui/react'
 import { GlobalStyle } from '@comps/styles/GlobalStyle';
 import React, { useEffect } from 'react';
-import { RecoilRoot, useRecoilState } from 'recoil';
-import { matchIdState, uuidState } from 'src/recoil/socket';
+import { RecoilRoot, useRecoilState, useRecoilValue } from 'recoil';
+import { matchIdState, webSocketState, uuidState } from 'src/recoil/socket';
 import { WagmiConfig } from 'wagmi';
 import { client } from 'src/hooks/useWallet';
+import { eggsState, isLoadingState, isMyTurnState, opponentEggsState } from 'src/recoil/game';
+import { useRouter } from 'next/router';
+import convertGameData from 'src/utils/convertGameData';
 
 let socket;
 
 function WebSocketInitializer({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
   const [socketId, setSocketId] = useRecoilState(uuidState);
-  const [, setMatchId] = useRecoilState(matchIdState);
+  const [matchId, setMatchId] = useRecoilState(matchIdState);
+  const [, setIsLoading] = useRecoilState(isLoadingState);
+  const [, setIsMyTurn] = useRecoilState(isMyTurnState);
+  const [, setWebSocket] = useRecoilState(webSocketState);
+  const [, setEggs] = useRecoilState(eggsState);
+  const [, setOpponentEggs] = useRecoilState(opponentEggsState);
+
   const socketInitializer = () => {
     socket = new WebSocket(`${process.env.WS_ORIGIN}/v1/ws`);
-    // let socketType = 'connect';
   
     socket.addEventListener('open', function (event) {
       console.log('ws connected');
@@ -25,7 +34,24 @@ function WebSocketInitializer({ children }: { children: React.ReactNode }) {
 
       if (data.type === 'wsId') setSocketId(data.content);
       if (data.type === 'gameId') setMatchId(data.content);
+      if (data.type === 'gameInfo') {
+        const gameData = JSON.parse(data.content);
+
+        // console.log(gameData)
+        if (gameData.state === 'setting') {
+          const val = convertGameData(gameData.data);
+          setOpponentEggs(val);
+        }
+        if (gameData.state === 'action') {
+          const val = convertGameData(gameData.data);
+          setEggs(val);
+          setIsLoading(true);
+          setIsMyTurn(true);
+        }
+      }
     });
+
+    setWebSocket(socket);
   };
 
   useEffect(() => socketInitializer(), []);

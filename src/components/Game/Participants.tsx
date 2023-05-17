@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Text } from "@chakra-ui/react";
 import ClockIcon from 'public/icons/icon-clock.svg';
 import Profile from "./Profile";
 import { color } from "@comps/styles/common.style";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { isFirstState, isMyTurnState } from "src/recoil/game";
 
 
 interface Props {
@@ -22,13 +24,19 @@ export default function Participants({
   time,
   isMatching=false,
 }: Props) {
+  const isFirst = useRecoilValue(isFirstState);
+  const [isMyTurn, setIsMyTurn] = useRecoilState(isMyTurnState);
+
+  useEffect(() => {
+    setIsMyTurn(isFirst);
+  }, [isFirst]);
   return (
     <Box pt="18px" px="20px" display="flex" position="relative">
       <Profile
         type={1}
         address={player1}
         img={player1Img}
-        isCurrent
+        isCurrent={isMyTurn}
       />
       <Box 
         mt="8px"
@@ -48,8 +56,9 @@ export default function Participants({
       </Box>
       <Profile
         type={2}
-        // address={player2}
-        // img={player2Img}
+        address={player2}
+        img={player2Img}
+        isCurrent={!isMyTurn}
       />
       {isMatching && (
         <Text 

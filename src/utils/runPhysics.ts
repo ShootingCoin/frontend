@@ -1,4 +1,4 @@
-export default function runPhysics(eggArray, radius) {
+export default function runPhysics(eggArray, radius, width, onComplete) {
   // check_meet use for checking kiss Eggs
   let check_meet;
 
@@ -9,6 +9,12 @@ export default function runPhysics(eggArray, radius) {
       eggArray[i].y_pos += eggArray[i].y_dir * eggArray[i].speed;
       eggArray[i].speed -= eggArray[i].friction * eggArray[i].mass;
 
+      if (
+        eggArray[i].x_pos < 0 || eggArray[i].x_pos > width || 
+        eggArray[i].y_pos < 0 || eggArray[i].y_pos > width
+      ) {
+        eggArray[i].isOut = true;
+      }
       
       for (let j = 0; j < eggArray.length; j++) {
         check_meet = false;
@@ -34,7 +40,7 @@ export default function runPhysics(eggArray, radius) {
           }
           
 
-          if (check_meet) {
+          if (check_meet && !eggArray[i].isOut && !eggArray[j].isOut) {
             // When Kiss Break direction Degree = A
             // When Kiss Other Egg's direction between origin Degree = B
             // Calculate Two Egg's direction and speed
@@ -75,8 +81,11 @@ export default function runPhysics(eggArray, radius) {
     }
   }
   if (check_remain_energy) {
-    setTimeout(() => runPhysics(eggArray, radius), 20);
+    setTimeout(() => runPhysics(eggArray, radius, width, onComplete), 20);
+  } else {
+    onComplete(eggArray);
   }
+
 };
 
 // Check is Meet

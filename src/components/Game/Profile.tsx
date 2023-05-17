@@ -40,6 +40,9 @@ export default function Profile({
             fontSize="13px"
             lineHeight="1.2"
             color="#B0B0B0"
+            {...type === 2 && {
+              textAlign: 'right'
+            }}
           >
             {reduceHashString(address)}
           </Text>

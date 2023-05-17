@@ -47,7 +47,6 @@ export default function ReadyPage() {
   }, [current]);
 
   useEffect(() => {
-    console.log(matchId)
     if (matchId) {
       setIsLoading(false);
       push(`/game/${matchId}/setting`);

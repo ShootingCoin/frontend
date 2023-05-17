@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { Button, Container } from "src/components/common";
 import { GameExitModal } from "src/components/Modal";
-import { defaultChips } from "src/dummy";
+import { account, defaultChips } from "src/dummy";
 import useWallet from "src/hooks/useWallet";
 import Game from "~/src/components/Game";
 import Participants from "~/src/components/Game/Participants";
@@ -15,7 +15,7 @@ const player2 = '0xfs312a2f3E829C0b614566B3E152e417d14q6EP3';
 const GamePage = ({ id }) => {
   const router = useRouter();
   const { query } = router;
-  const { address } = useWallet();
+  // const { address } = useWallet();
   const [time, setTime] = useState(45);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -37,12 +37,11 @@ const GamePage = ({ id }) => {
       <Container>
         <GameHeader chips={defaultChips} type="game" onExit={() => setIsModalOpen(true)} />
         <Participants 
-          player1={address}  
+          player1={account}  
           player2={player2}
           player1Img=""
           player2Img=""
           time={time}
-          isMatching
         />
         <Box mt="40px" mx="20px">
           <Game />
