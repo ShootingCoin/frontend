@@ -7,11 +7,13 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { currentSituationState, eggsState, isLoadingState, isMyTurnState } from "src/recoil/game";
 import { uuidState, webSocketState } from "src/recoil/socket";
 import Egg from "src/interfaces/Egg";
+import { useRouter } from "next/router";
 
 const fullW = 500;
 const fullH = 500;
 
 export default function Game() {
+  const router = useRouter();
   const webSocket = useRecoilValue(webSocketState);
   const uuid = useRecoilValue(uuidState);
   const [eggs, setEggs] = useRecoilState(eggsState);
@@ -271,8 +273,21 @@ export default function Game() {
   }, [boardSize, eggs]);
 
   useEffect(() => {
-    
-  }, []);
+    if (currentSituation) {
+      const myEggs = currentSituation.filter(x => x.account === uuid && x.isOut === false).length;
+      const opponentEggs = currentSituation.filter(x => x.account !== uuid && x.isOut === false).length;
+
+      if (myEggs === 0) {
+        router.push(`/game/${router.query.id}/result?status=lose`);
+      } else if (opponentEggs === 0) {
+        router.push(`/game/${router.query.id}/result?status=win`);
+      }
+      console.log(
+        "myEggs: " + myEggs + '\n' +
+        "opponentEggs: " + opponentEggs
+      );
+    }
+  }, [currentSituation]);
 
   return (
     <Box 

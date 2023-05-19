@@ -6,15 +6,15 @@ import React from "react";
 import { Button, Container } from "src/components/common";
 import { color } from "src/components/styles/common.style";
 
-const data = {
-  status: 'lose', 
-  amount: 234.09,
-  unit: 'ETH',
-  price: 127433.433,
-};
-
 export default function ResultPage() {
   const router = useRouter();
+
+  const data = {
+    status: router.query.status === 'win' ? 'win' : 'lose', 
+    amount: 234.09,
+    unit: 'ETH',
+    price: 127433.433,
+  };
   return (
     <>
       <Head>
