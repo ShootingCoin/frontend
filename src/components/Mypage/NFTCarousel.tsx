@@ -79,10 +79,10 @@ export default function NFTCarousel({ initialShow }: { initialShow?: number }) {
           />
 
           <Box 
-            mt="-16px"
+            mt="-32px"
             p="13px 12px" 
             color={color.text.primary}
-            background="linear-gradient(180deg, rgba(148, 148, 148, 0) -24.61%, rgba(78, 77, 77, 0.418919) 10.38%, #434343 100%)"
+            background="linear-gradient(180deg, rgba(148, 148, 148, 0) 0%, rgba(78, 77, 77, 0.418919) 50.38%, #434343 100%)"
             backdropFilter="blur(16px)"
             borderBottomLeftRadius="13px"
             borderBottomRightRadius="13px"

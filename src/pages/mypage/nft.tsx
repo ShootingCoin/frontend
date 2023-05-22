@@ -39,12 +39,10 @@ export default function MyNFTPage() {
           <Box
             position="absolute"
             w="30vw"
-            h="30vw"
             maxW="150px"
-            maxH="150px"
-            bg="#DE9CFF"
+            pt={`min(${150 * 666 / 579}px, ${30 * 666 / 579}vw)`}
             borderRadius="50%"
-            top="25%"
+            top="18%"
             left="50%"
             transform="translate(-50%, 0)"
             animation="1s hover ease-in-out infinite alternate"
@@ -54,7 +52,13 @@ export default function MyNFTPage() {
                 to: { transform: 'translate(-50%, 5%)' },
               }
             }}
-          />
+          >
+            <Image
+              alt="jewel"
+              src="/imgs/jewel.png"
+              layout="fill"
+            />
+          </Box>
         </Box>
       </Container>
     </>

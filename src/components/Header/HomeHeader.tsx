@@ -1,9 +1,12 @@
 import { Box, Text } from "@chakra-ui/react";
 import React from "react";
 import { color } from "@comps/styles/common.style";
+import { useRouter } from "next/router";
+import { assets } from "src/dummy";
 
 const HomeHeader = () => {
-  const balance = 12.35;
+  const router = useRouter();
+  const balance = assets.map(x => x.price).reduce((x, acc) => acc + x);
   return (
     <Box 
       as="header"
@@ -20,7 +23,7 @@ const HomeHeader = () => {
         lineHeight="1.2"
         color="#fff"
       >
-        $&nbsp;&nbsp;{balance}
+        $&nbsp;&nbsp;{balance.toLocaleString()}
       </Text>
       <Box 
         ml="auto"
@@ -30,8 +33,9 @@ const HomeHeader = () => {
         border="2px solid #fff"
         borderRadius="99px"
         bgColor="#DE9CFF"
+        onClick={() => router.push('/mypage')}
       >
-        <img alt="wallet img" />
+        {/* <img alt="wallet img" /> */}
       </Box>
     </Box>
   );

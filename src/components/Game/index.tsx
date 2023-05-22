@@ -4,7 +4,7 @@ import runPhysics from "src/utils/runPhysics";
 import { color } from "@comps/styles/common.style";
 import Img from "next/image";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { currentSituationState, eggsState, isLoadingState, isMyTurnState } from "src/recoil/game";
+import { currentSituationState, eggsState, isLoadingState, isMyTurnState, timeState } from "src/recoil/game";
 import { uuidState, webSocketState } from "src/recoil/socket";
 import Egg from "src/interfaces/Egg";
 import { useRouter } from "next/router";
@@ -20,6 +20,7 @@ export default function Game() {
   const [currentSituation, setCurrentSituation] = useRecoilState(currentSituationState);
   const [isMyTurn, setIsMyTurn] = useRecoilState(isMyTurnState);
   const [isLoading, setIsLoading] = useRecoilState(isLoadingState);
+  const [time, setTime] = useRecoilState(timeState);
   const [boardSize, setBoardSize] = useState<number>(1 - 40 / 500);
 
   function resize() {
@@ -55,6 +56,17 @@ export default function Game() {
     let blank = fullW / 50 * boardSize;
     // Egg's Array
     let egg_array = new Array();
+    let time_left = 45;
+
+    setTime(time_left);
+    const countdown = setInterval(() => {
+      if (time_left > 0) {
+        time_left -= 1;
+        setTime(time_left);
+      } else {
+        clearInterval(countdown);
+      }
+    }, 1000);
 
     function init(){
       // Init Eggs (Spawn)
@@ -138,7 +150,11 @@ export default function Game() {
         if (!egg_array[i].isOut) {
           ctx.beginPath();
           let image = new Image();
-          image.src = '/imgs/chips/chip_aptos.svg';
+          if (egg_array[i].account === uuid) {
+            image.src = '/imgs/coins/STC.svg';
+          } else {
+            image.src = '/imgs/coins/Polygon.svg';
+          }
 
           ctx.drawImage(image, egg_array[i].x_pos - radius, egg_array[i].y_pos - radius, radius * 2, radius * 2);
         }
@@ -267,6 +283,7 @@ export default function Game() {
     
     return () => {
       clearInterval(updateBoardInterval);
+      clearInterval(countdown);
       c.removeEventListener("mousedown", mouseDownListener, false);
       c.removeEventListener("touchstart", mouseDownListener, false);
     }

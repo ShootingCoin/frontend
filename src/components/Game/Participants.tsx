@@ -4,7 +4,7 @@ import ClockIcon from 'public/icons/icon-clock.svg';
 import Profile from "./Profile";
 import { color } from "@comps/styles/common.style";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { isFirstState, isMyTurnState } from "src/recoil/game";
+import { isFirstState, isMyTurnState, timeState } from "src/recoil/game";
 
 
 interface Props {
@@ -12,7 +12,6 @@ interface Props {
   player2?: string;
   player1Img: string;
   player2Img?: string;
-  time: number;
   isMatching?: boolean;
 }
 
@@ -21,10 +20,10 @@ export default function Participants({
   player2,
   player1Img,
   player2Img,
-  time,
   isMatching=false,
 }: Props) {
   const isFirst = useRecoilValue(isFirstState);
+  const time = useRecoilValue(timeState);
   const [isMyTurn, setIsMyTurn] = useRecoilState(isMyTurnState);
 
   useEffect(() => {

@@ -72,7 +72,7 @@ export default function ReadyPage() {
           <TokenForm
             limit={limit}
             defaultValue={chips.find(x => x.isSelected)?.amount || null}
-            selectedCoin={chips.find(x => x.isSelected)?.name || 'Aptos'}
+            selectedCoin={chips.find(x => x.isSelected)?.name || 'Polygon'}
             onChangeValue={(val) => {
               setChips(chips.map(x => {
                 if (x.isSelected) {

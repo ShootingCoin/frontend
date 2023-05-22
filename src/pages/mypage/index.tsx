@@ -5,10 +5,12 @@ import { MypageHeader } from '@comps/Header';
 import { Assets, History, Navigator, NFTList } from '@comps/Mypage';
 import { MypageNavigatorEnum } from 'src/types';
 import { Container } from '@comps/common';
+import { assets } from 'src/dummy';
 
 export default function mypage() {
   const { query, push } = useRouter();
   const [current, setCurrent] = useState<MypageNavigatorEnum>(MypageNavigatorEnum.Assets);
+  const balance = assets.map(x => x.price).reduce((x, acc) => acc + x);
 
   useEffect(() => {
     if (
@@ -26,7 +28,7 @@ export default function mypage() {
         <title>Shooting coin: Mypage</title>
       </Head>
       <Container>
-        <MypageHeader account='0xfs312a2f3E829C0b614566B3E152e417d14q6EP3' balance={23.45} />
+        <MypageHeader account='0xfs312a2f3E829C0b614566B3E152e417d14q6EP3' balance={balance} />
         <Navigator current={current} onSelect={(val) => { push({ query: { category: val } }); }} />
         {current === MypageNavigatorEnum.Assets && <Assets />}
         {current === MypageNavigatorEnum.History && <History />}

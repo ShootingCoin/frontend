@@ -1,29 +1,9 @@
 import { Box, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import React from "react";
+import { assets } from "src/dummy";
 import useLayoutConfig from "src/hooks/useLayoutConfig";
 import ContentWrapper from "./ContentWrapper";
-
-const assets = [
-  {
-    name: 'Ethereum',
-    unit: 'ETH',
-    amount: 23.43,
-    price: 3223.444
-  },
-  {
-    name: 'Aptos',
-    unit: 'APT',
-    amount: 1000,
-    price: 3223.444
-  },
-  {
-    name: 'Aptos',
-    unit: 'APT',
-    amount: 232,
-    price: 3223.444
-  },
-];
 
 export default function Assets() {
   const { contentAreaHeight } = useLayoutConfig();
@@ -46,7 +26,7 @@ export default function Assets() {
                 {asset.amount}
               </Text>
               <Text mt="4px" fontWeight={500} fontSize="16px" lineHeight="16px">
-                $ {asset.price}
+                $ {asset.price.toLocaleString()}
               </Text>
             </Box>
           </Box>

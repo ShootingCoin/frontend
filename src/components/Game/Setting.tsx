@@ -82,7 +82,7 @@ export default function Setting() {
       for (let i = 0; i < egg_array.length; i++) {
         ctx.beginPath();
         let image = new Image();
-        image.src = '/imgs/chips/chip_aptos.svg';
+        image.src = '/imgs/coins/STC.svg';
 
         ctx.drawImage(image, egg_array[i].x_pos - radius, egg_array[i].y_pos - radius, radius * 2, radius * 2);
       }

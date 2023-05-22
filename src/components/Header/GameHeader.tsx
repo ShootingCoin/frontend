@@ -62,8 +62,23 @@ const GameHeader = ({
               borderRadius="7px"
               bg={chip.isSelected ? color.primary.main : 'transparent'}
             >
-              {isOut ? <Image alt="chip out" src="/imgs/chips/chip_aptos_out.svg" width="50px" height="50px" /> : <Image alt="chip" src="/imgs/chips/chip_aptos.svg"  width="50px" height="50px" />}
+              <Box
+                border="1px solid #fff"
+                borderRadius="99px"
+                w="50px"
+                h="50px"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                bg={color.background.header}
+                {...isOut && {
+                  filter: "brightness(50%)"
+                }}
+              >
+                <Image alt="chip out" src={`/imgs/coins/STC.svg`} width="38px" height="38px" />
+              </Box>
               <Text
+                mt="6px"
                 fontWeight="800"
                 fontSize="16px"
                 lineHeight="16px"
@@ -76,7 +91,7 @@ const GameHeader = ({
                 fontWeight="500"
                 fontSize="14px"
                 lineHeight="18px"
-                color={chip.isSelected ? color.text.secondary : color.text.primary}
+                color={chip.isSelected ? color.text.secondary : (isOut ? '#757575' : color.text.primary)}
               >
                 {chip.unit}
               </Text>

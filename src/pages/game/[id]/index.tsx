@@ -16,19 +16,9 @@ const GamePage = ({ id }) => {
   const router = useRouter();
   const { query } = router;
   // const { address } = useWallet();
-  const [time, setTime] = useState(45);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    const countdown = setInterval(() => {
-      if (time > 0) {
-        setTime(time - 1);
-      } else {
-        clearInterval(countdown);
-      }
-    }, 1000);
-    return clearInterval(countdown);
-  }, [time]);
+  
   return (
     <>
       <Head>
@@ -41,7 +31,6 @@ const GamePage = ({ id }) => {
           player2={player2}
           player1Img=""
           player2Img=""
-          time={time}
         />
         <Box mt="40px" mx="20px">
           <Game />

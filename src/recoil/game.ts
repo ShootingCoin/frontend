@@ -29,3 +29,8 @@ export const isLoadingState = atom<boolean>({
   key: `is-loading-${Math.random()}`,
   default: true,
 });
+
+export const timeState = atom<number>({
+  key: `time-${Math.random()}`,
+  default: 45,
+});
