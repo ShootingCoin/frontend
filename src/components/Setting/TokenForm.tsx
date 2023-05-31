@@ -83,6 +83,7 @@ export default function TokenForm({
             padding: '0'
           }}
         >
+          <option value="STC">STC</option>
           <option value="Polygon">MATIC</option>
           <option value="Ethereum">ETH</option>
         </Select>
