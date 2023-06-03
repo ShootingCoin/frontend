@@ -18,6 +18,7 @@ import { abi, contractAddress } from "src/contracts/Manager";
 import { STCAddress } from "src/contracts/Coin";
 import { limit } from "src/constants";
 import { chipsState } from "src/recoil/game";
+import api from "src/api";
 
 export default function ReadyPage() {
   const { query, push } = useRouter();
@@ -44,8 +45,10 @@ export default function ReadyPage() {
       const hash = await contract.enterGame(
         address,
         [coinAddress, limit[query.type as string]?.min, [0, 0, 0, 0, 0]],
-        uuid,
       );
+      if (hash) {
+        await api.match(limit[query.type as string]?.min, uuid);
+      }
       console.log(hash)
     }
   };
@@ -74,6 +77,14 @@ export default function ReadyPage() {
         new Array(5).fill({
           ...coinInfo,
           amount: limit[query.type as string]?.min
+        }).map((x, i) => { 
+          if (i === 0) {
+            return {
+              ...x,
+              isSelected: true
+            };
+          }
+          return x;
         })
       )
     }

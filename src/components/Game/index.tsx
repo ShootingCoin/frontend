@@ -300,10 +300,10 @@ export default function Game() {
       }
       if (myEggs === 0) {
         finish(100);
-        // router.push(`/game/${router.query.id}/result?status=lose`);
+        router.push(`/game/${router.query.id}/result?status=lose`);
       } else if (opponentEggs === 0) {
         finish(-100);
-        // router.push(`/game/${router.query.id}/result?status=win`);
+        router.push(`/game/${router.query.id}/result?status=win`);
       }
       console.log(
         "myEggs: " + myEggs + '\n' +

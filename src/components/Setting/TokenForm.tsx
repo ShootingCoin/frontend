@@ -76,7 +76,7 @@ export default function TokenForm({
           height="27px" 
         />
         <Select 
-          defaultValue={selectedCoin}
+          value={selectedCoin}
           focusBorderColor="transparent"
           bg="transparent"
           color="#fff"
@@ -90,6 +90,7 @@ export default function TokenForm({
           }}
         >
           <option value="Polygon">MATIC</option>
+          <option value="STC">STC</option>
         </Select>
       </Box>
       {isWrong && (

@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Text } from "@chakra-ui/react";
-import { Chip } from "~/src/types";
 import Image from "next/image";
 import { color } from "@comps/styles/common.style";
 import HeaderHead from "./HeaderHead";
@@ -74,7 +73,7 @@ const GameHeader = ({
                   filter: "brightness(50%)"
                 }}
               >
-                <Image alt="chip out" src={`/imgs/coins/Polygon.svg`} width="38px" height="38px" />
+                <Image alt="chip out" src={`/imgs/coins/${chip.name}.svg`} width="38px" height="38px" />
               </Box>
               <Text
                 mt="6px"
