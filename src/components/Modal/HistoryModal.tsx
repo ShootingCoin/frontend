@@ -8,20 +8,27 @@ import Image from 'next/image';
 import { Button } from '@comps/common';
 
 interface Props {
+  account: string;
   open: boolean;
   onClose: () => void;
 };
 
 export default function HistoryModal({
-  hash,
-  opponent,
-  status,
-  amount,
-  unit,
-  date,
+  gameId,
+  user1,
+  user1coinAddress,
+  user1GetAmount,
+  user2,
+  user2coinAddress,
+  user2GetAmount,
+  timeStamp,
+  account,
   open,
   onClose
 }: HistoryType & Props) {
+  const opponent = user1 === account ? user2 : user1;
+  const amount = user1 === account ? user1GetAmount : user2GetAmount;
+  const status = amount > 0 ? 'win' : 'lose';
   if (!open) return <></>;
   return (
     <Portal>
@@ -63,19 +70,19 @@ export default function HistoryModal({
               </td>
               <td>
                 <Text mb="16px" fontWeight={500} fontSize="17px" lineHeight="20px" color={color.text.primary}>
-                  {dayjs(date).format('YYYY.MM.DD')}&nbsp;&nbsp;{dayjs(date).format('HH:mm')}
+                  {dayjs(timeStamp * 1000).format('YYYY.MM.DD')}&nbsp;&nbsp;{dayjs(timeStamp * 1000).format('HH:mm')}
                 </Text>
               </td>
             </tr>
             <tr>
               <td>
                 <Text mb="16px" fontWeight={500} fontSize="16px" lineHeight="16px" color={color.text.teritary}>
-                  Tx Hash
+                  Game Id
                 </Text>
               </td>
               <td>
                 <Text mb="16px" fontWeight={500} fontSize="17px" lineHeight="20px" color={color.primary.main}>
-                  {reduceHashString(hash, 10, 6)}
+                  {gameId}
                 </Text>
               </td>
             </tr>
@@ -106,7 +113,7 @@ export default function HistoryModal({
               {status === 'win' ? 'You got' : 'You lost'}
             </Text>
             <Text mt="4px" fontWeight={700} fontSize="20px" lineHeight="26px" letterSpacing="0.2%">
-              {amount} {unit}
+              {amount} {'MATIC'}
             </Text>
           </Box>
         </Box>

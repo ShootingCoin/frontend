@@ -9,8 +9,16 @@ const match = async (price: number, uuid: string) => {
   });
 };
 
+const endGame = async (gameId: string,{ account, amount }: { account: string, amount: number }) => {
+  await axios.post(`${HTTP_ORIGIN}/v1/result/${gameId}`, {
+    account,
+    amount,
+  });
+};
+
 const api = {
   match,
+  endGame,
 };
 
 export default api;

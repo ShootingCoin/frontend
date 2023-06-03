@@ -5,7 +5,7 @@ import Participants from "~/src/components/Game/Participants";
 import Setting from "~/src/components/Game/Setting";
 import { GameHeader } from "~/src/components/Header";
 import { Button, Container } from '@comps/common';
-import { account, defaultChips, player2 } from "src/dummy";
+import { account, player2 } from "src/dummy";
 import { useRouter } from "next/router";
 import { GameExitModal } from "src/components/Modal";
 import useLoading from "src/hooks/useLoading";
@@ -20,7 +20,6 @@ const GameSettingPage = () => {
   const [eggs, setEggs] = useRecoilState(eggsState);
   const opponentEggs = useRecoilValue(opponentEggsState);
   const webSocket = useRecoilValue(webSocketState);
-  const [time, setTime] = useState(45);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClickReady = () => {
@@ -31,7 +30,6 @@ const GameSettingPage = () => {
       }));
       setIsLoading(true);
     }
-    // router.push(`/game/${router.query.id}`);
   };
 
   useEffect(() => {
@@ -50,32 +48,18 @@ const GameSettingPage = () => {
     }
   }, [opponentEggs, isLoading]);
 
-  useEffect(() => {
-    const countdown = setInterval(() => {
-      if (time > 0) {
-        setTime(time - 1);
-      } else {
-        clearInterval(countdown);
-      }
-    }, 1000);
-    return clearInterval(countdown);
-  }, [time]);
   return (
     <>
       <Head>
         <title>Shooting coin</title>
       </Head>
       <Container>
-        <GameHeader 
-          chips={defaultChips} 
-          onReturn={() => setIsModalOpen(true)} 
-        />
+        <GameHeader onReturn={() => setIsModalOpen(true)} />
         <Participants 
           player1={account}  
           player2={player2}
-          player1Img=""
-          player2Img=""
-          time={time}
+          player1Img="/imgs/profile.svg"
+          player2Img="/imgs/profile.svg"
         />
         <Box 
           mt="40px" 

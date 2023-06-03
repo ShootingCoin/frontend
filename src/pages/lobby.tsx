@@ -4,14 +4,14 @@ import React, { useState } from 'react';
 import { Button, Container } from '@comps/common';
 import { HomeHeader } from '@comps/Header';
 import { Rooms } from '@comps/Lobby';
-import { WalletConnectModal } from '@comps/Modal';
 import { CardTypeEnum } from '../types';
 import useWallet from 'src/hooks/useWallet';
+import { Text } from '@chakra-ui/react';
 
 
 const LobbyPage = () => {
   const { address } = useWallet();
-  const [selected, setSelected] = useState<CardTypeEnum>(CardTypeEnum.Gold);
+  const [selected, setSelected] = useState<CardTypeEnum>(CardTypeEnum.Bronze);
   const router = useRouter();
   
   return (
@@ -19,19 +19,28 @@ const LobbyPage = () => {
       <Head>
         <title>Shooting coin: Lobby</title>
       </Head>
-      {!address && (
-        <WalletConnectModal/>
-      )}
       <Container>
         <HomeHeader />        
-        <Rooms selected={selected} onSelect={setSelected} />
-        <Button 
-          disabled={!address}
-          margin="auto auto 72px auto"
-          onClick={() => router.push({ pathname: '/game/ready', query: { type: selected } })}
+        <Text
+          mt="80px"
+          textAlign="center"
+          color="#fff"
+          fontWeight="700"
+          fontSize="32px"
+          lineHeight="40px"
         >
-          Enter the room
-        </Button>
+          Select Game Room
+        </Text>
+        <Rooms selected={selected} onSelect={setSelected} />
+        {address && (
+          <Button 
+            disabled={!address}
+            margin="auto auto 72px auto"
+            onClick={() => router.push({ pathname: '/game/ready', query: { type: selected } })}
+          >
+            Enter the room
+          </Button>
+        )}
       </Container>
     </>
   );

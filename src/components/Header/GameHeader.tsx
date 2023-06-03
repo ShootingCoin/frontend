@@ -5,11 +5,10 @@ import Image from "next/image";
 import { color } from "@comps/styles/common.style";
 import HeaderHead from "./HeaderHead";
 import { useRecoilValue } from "recoil";
-import { currentSituationState } from "src/recoil/game";
+import { chipsState, currentSituationState } from "src/recoil/game";
 import { uuidState } from "src/recoil/socket";
 
 interface Props {
-  chips: Chip[];
   isSelectable?: boolean;
   type?: 'setting'|'game';
   onSelect?: (val: number) => void;
@@ -18,7 +17,6 @@ interface Props {
 }
 
 const GameHeader = ({
-  chips,
   isSelectable=false,
   type="setting",
   onSelect,
@@ -26,6 +24,7 @@ const GameHeader = ({
   onExit,
 }: Props) => {
   const uuid = useRecoilValue(uuidState);
+  const chips = useRecoilValue(chipsState);
   const currentSituation = useRecoilValue(currentSituationState);
 
   return (
@@ -75,7 +74,7 @@ const GameHeader = ({
                   filter: "brightness(50%)"
                 }}
               >
-                <Image alt="chip out" src={`/imgs/coins/STC.svg`} width="38px" height="38px" />
+                <Image alt="chip out" src={`/imgs/coins/Polygon.svg`} width="38px" height="38px" />
               </Box>
               <Text
                 mt="6px"
@@ -84,7 +83,7 @@ const GameHeader = ({
                 lineHeight="16px"
                 color={chip.isSelected ? color.text.secondary : (isOut ? '#757575' : color.text.primary)}
               >
-                {chip.amount.toLocaleString()}
+                {chip.amount?.toLocaleString()}
               </Text>
               <Text
                 mt='4px'

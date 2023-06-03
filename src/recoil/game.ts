@@ -1,4 +1,11 @@
 import { atom } from "recoil";
+import { defaultChips } from "src/dummy";
+import { Chip } from "src/types";
+
+export const chipsState = atom<Array<Chip>>({
+  key: `chips-${Math.random()}`,
+  default: defaultChips,
+});
 
 export const eggsState = atom<Array<any>>({
   key: `eggs-${Math.random()}`,

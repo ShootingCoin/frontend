@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Box } from "@chakra-ui/react";
 import Egg from "src/interfaces/Egg";
 import Img from "next/image";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { eggsState } from "src/recoil/game";
-import { uuidState } from "src/recoil/socket";
+import useWallet from "src/hooks/useWallet";
 
 const fullW = 500;
 const fullH = 500;
 
 export default function Setting() {
-  const uuid = useRecoilValue(uuidState);
+  const { address } = useWallet();
   const [, setEggs] = useRecoilState(eggsState);
   const [boardSize, setBoardSize] = useState<number>(1 - 40 / 500);
 
@@ -55,7 +55,7 @@ export default function Setting() {
             y_pos: (0.18 + 0.64 * 5 / 6) * fullW * boardSize, 
             color: 0,
             mass: 1,
-            account: uuid,
+            account: address,
           })
         );
       }
@@ -82,7 +82,7 @@ export default function Setting() {
       for (let i = 0; i < egg_array.length; i++) {
         ctx.beginPath();
         let image = new Image();
-        image.src = '/imgs/coins/STC.svg';
+        image.src = '/imgs/coins/Polygon.svg';
 
         ctx.drawImage(image, egg_array[i].x_pos - radius, egg_array[i].y_pos - radius, radius * 2, radius * 2);
       }

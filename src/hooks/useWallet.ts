@@ -1,10 +1,17 @@
-import { getDefaultProvider } from "ethers";
 import { useEffect, useMemo, useState } from "react";
-import { createClient, useAccount } from "wagmi";
+import { polygonMumbai } from "viem/chains";
+import { configureChains, createClient, useAccount } from "wagmi";
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains, provider, webSocketProvider } = configureChains(
+  [polygonMumbai],
+  [publicProvider()],
+);
 
 export const client = createClient({
   autoConnect: true,
-  provider: getDefaultProvider(),
+  provider,
+  webSocketProvider,
 });
 
 export default function useWallet() {

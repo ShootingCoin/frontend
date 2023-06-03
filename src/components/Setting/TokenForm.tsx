@@ -2,21 +2,25 @@ import React, { useState } from 'react';
 import { Box, Input, Select, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 import { color } from '@comps/styles/common.style';
+import { CardTypeEnum } from 'src/types';
+import { limit } from 'src/constants';
 
 interface Props {
-  limit: number;
+  type: CardTypeEnum;
   defaultValue: number | null;
   onChangeValue: (val: number) => void;
   selectedCoin?: string;
 }
 
 export default function TokenForm({
-  limit,
+  type,
   defaultValue,
   onChangeValue,
   selectedCoin,
 }: Props) {
-  const [isWrong, setIsWrong] = useState(false);
+  const [isWrong, setIsWrong] = useState<'max'|'min'|false>(false);
+  const min = limit[type].min;
+  const max = limit[type].max;
   return (
     <Box
       p="16px 12px 16px 28px"
@@ -31,13 +35,15 @@ export default function TokenForm({
         defaultValue={defaultValue}
         onChange={e => {
           const value = Number(e.target.value);
-          if (value <= limit) {
+          if (value <= max && value >= min) {
             onChangeValue(value);
             if (isWrong) {
               setIsWrong(false);
             }
+          } else if (value > max) {
+            setIsWrong('max');
           } else {
-            setIsWrong(true);
+            setIsWrong('min');
           }
         }}
         focusBorderColor="transparent"
@@ -83,9 +89,7 @@ export default function TokenForm({
             padding: '0'
           }}
         >
-          <option value="STC">STC</option>
           <option value="Polygon">MATIC</option>
-          <option value="Ethereum">ETH</option>
         </Select>
       </Box>
       {isWrong && (
@@ -98,7 +102,12 @@ export default function TokenForm({
           lineHeight="15px"
           color={color.error}
         >
-          Can't put more than {limit} in
+          {isWrong === 'max' ? (
+            `Can't put more than ${max} in`
+          ) : (
+            `Can't put less than ${min} in`
+          )}
+          
         </Text>
       )}
     </Box>

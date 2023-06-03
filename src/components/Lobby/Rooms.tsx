@@ -10,10 +10,13 @@ interface Props {
 };
 
 const roomTypes = [
-  { type: CardTypeEnum.Gold },
-  { type: CardTypeEnum.Silver },
   { type: CardTypeEnum.Bronze },
-  { type: CardTypeEnum.Friend },
+  { type: CardTypeEnum.Silver },
+  { type: CardTypeEnum.Gold },
+  { type: CardTypeEnum.Platinum },
+  { type: CardTypeEnum.Diamond },
+  { type: CardTypeEnum.Master },
+  { type: CardTypeEnum.Challenger },
 ];
 
 const width = 236;
@@ -50,7 +53,7 @@ export default function Rooms({ selected, onSelect }: Props) {
   return (
     <Box 
       id="room-carousel"
-      mt="52px" 
+      mt="54px" 
       display="flex"
       overflowX="scroll"
       transition="1s"

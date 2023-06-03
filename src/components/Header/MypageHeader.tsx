@@ -2,13 +2,13 @@ import React from "react";
 import { Box, Text } from "@chakra-ui/react";
 import { color } from "@comps/styles/common.style";
 import HeaderHead from "./HeaderHead";
+import Image from "next/image";
 
 interface Props {
-  account: string;
   balance: number;
 }
 
-export default function MypageHeader({ account, balance }: Props) {
+export default function MypageHeader({ balance }: Props) {
   return (
     <Box
       as="header"
@@ -21,16 +21,12 @@ export default function MypageHeader({ account, balance }: Props) {
         display="flex"
         alignItems="center"
       >
-        <Box 
-          w="65px"
-          h="65px"
-          boxSizing="border-box"
-          border="2px solid #fff"
-          borderRadius="99px"
-          bgColor="#DE9CFF"
-        >
-          {/* <img alt="wallet img" /> */}
-        </Box>
+        <Image
+          alt="profile"
+          src="/imgs/profile.svg"
+          width="65"
+          height="65"
+        />
         <Box ml="20px" display="flex" alignItems="center" fontWeight="700">
           <Text fontSize="30px" lineHeight="36px" float="left">
             $

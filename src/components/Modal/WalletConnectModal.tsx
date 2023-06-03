@@ -4,7 +4,11 @@ import { color } from '@comps/styles/common.style';
 import { useConnect } from 'wagmi';
 import { InjectedConnector } from '@wagmi/core';
 
-export default function WalletConnectModal() {
+interface Props {
+  onClose: () => void;
+}
+
+export default function WalletConnectModal({ onClose }: Props) {
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   });
@@ -18,6 +22,7 @@ export default function WalletConnectModal() {
   return (
     <Portal>
       <Box 
+        onClick={onClose}
         bg="#000000C2"
         position="fixed"
         top="0"

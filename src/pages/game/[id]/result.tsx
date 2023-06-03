@@ -12,7 +12,7 @@ export default function ResultPage() {
   const data = {
     status: router.query.status === 'win' ? 'win' : 'lose', 
     amount: 234.09,
-    unit: 'ETH',
+    unit: 'MATIC',
     price: 127433.433,
   };
   return (

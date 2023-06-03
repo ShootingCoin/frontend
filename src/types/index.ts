@@ -1,4 +1,8 @@
 export enum CardTypeEnum {
+  Challenger='challenger',
+  Master='master',
+  Diamond='diamond',
+  Platinum='platinum',
   Gold='gold',
   Silver='silver',
   Bronze='bronze',
@@ -20,10 +24,12 @@ export type Chip = {
 };
 
 export type HistoryType = {
-  hash: string,
-  opponent: string,
-  status: 'win'|'lose',
-  amount: number,
-  unit: string,
-  date: Date,
+  gameId: number;
+  user1: string;
+  user1coinAddress: string;
+  user1GetAmount: number;
+  user2: string;
+  user2coinAddress: string;
+  user2GetAmount: number;
+  timeStamp: number;
 };

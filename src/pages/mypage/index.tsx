@@ -5,12 +5,38 @@ import { MypageHeader } from '@comps/Header';
 import { Assets, History, Navigator, NFTList } from '@comps/Mypage';
 import { MypageNavigatorEnum } from 'src/types';
 import { Container } from '@comps/common';
-import { assets } from 'src/dummy';
+import useWallet from 'src/hooks/useWallet';
+import { chainId } from 'src/constants';
+import { STCAddress } from 'src/contracts/Coin';
+import { useBalance } from 'wagmi';
+import { tokenPriceState } from 'src/recoil/token';
+import { useRecoilValue } from 'recoil';
 
 export default function mypage() {
   const { query, push } = useRouter();
+  const { address } = useWallet();
+  const { data: STC, isLoading: isSTCLoading, isError: isSTCError } = useBalance({
+    address: address as `0x${string}`,
+    chainId: chainId,
+    token: STCAddress,
+  });
+  const { data: Polygon, isLoading: isPolygonLoading, isError: isPolygonError } = useBalance({
+    address: address as `0x${string}`,
+    chainId: chainId,
+  });
+
+  const tokenPrice = useRecoilValue(tokenPriceState);
   const [current, setCurrent] = useState<MypageNavigatorEnum>(MypageNavigatorEnum.Assets);
-  const balance = assets.map(x => x.price).reduce((x, acc) => acc + x);
+  const assets = [{ 
+    name: 'Polygon',
+    price: Number(Polygon?.formatted) * tokenPrice?.MATIC,
+    ...Polygon
+  }, {
+    name: 'STC',
+    price: Number(STC?.formatted) * tokenPrice?.STC,
+    ...STC
+  }];
+  const balance = assets.map(x => x.price).reduce((cur, acc) => cur + acc);
 
   useEffect(() => {
     if (
@@ -22,17 +48,22 @@ export default function mypage() {
       setCurrent(query.category);
     }
   }, [query]);
+
   return (
     <>
       <Head>
         <title>Shooting coin: Mypage</title>
       </Head>
       <Container>
-        <MypageHeader account='0xfs312a2f3E829C0b614566B3E152e417d14q6EP3' balance={balance} />
-        <Navigator current={current} onSelect={(val) => { push({ query: { category: val } }); }} />
-        {current === MypageNavigatorEnum.Assets && <Assets />}
-        {current === MypageNavigatorEnum.History && <History />}
-        {current === MypageNavigatorEnum.NFT && <NFTList />}
+        {!(isSTCLoading || isPolygonLoading || isSTCError || isPolygonError) && (
+          <>
+            <MypageHeader balance={balance} />
+            <Navigator current={current} onSelect={(val) => { push({ query: { category: val } }); }} />
+            {current === MypageNavigatorEnum.Assets && <Assets assets={assets} />}
+            {current === MypageNavigatorEnum.History && <History />}
+            {current === MypageNavigatorEnum.NFT && <NFTList />}
+          </>
+        )}
       </Container>
     </>
   );

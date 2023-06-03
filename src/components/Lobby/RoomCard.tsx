@@ -1,5 +1,6 @@
 import { Box, Text } from '@chakra-ui/react';
 import React, { useMemo } from 'react';
+import { limit } from 'src/constants';
 import { CardTypeEnum } from '~/src/types';
 
 interface Props {
@@ -11,30 +12,51 @@ interface Props {
 export default function RoomCard({ type, isSelected, width=236 }: Props) {
   const content = useMemo(() => {
     switch (type) {
+      case CardTypeEnum.Challenger:
+        return {
+          bg: 'radial-gradient(50% 50% at 90% 100%,#A64F33 0%, #FFD8D877 71.44%, transparent 100%), radial-gradient(50% 50% at 90% 100%,#FF8F8855 80%, transparent 150%)',
+          title: <>Challenger<br/>Room</>,
+          description: 'High-priced room',
+          price: `${limit.challenger.min.toLocaleString()} - ${limit.challenger.max.toLocaleString()}`
+        };
+      case CardTypeEnum.Master:
+        return {
+          bg: 'radial-gradient(50% 50% at 90% 100%,#00A110 0%, #FFFFFF77 61.44%, transparent 100%), radial-gradient(50% 50% at 90% 100%,#88FFC655 80%, transparent 150%)',
+          title: <>Master<br/>Room</>,
+          description: 'High-priced room',
+          price: `${limit.master.min.toLocaleString()} - ${limit.master.max.toLocaleString()}`
+        };
+      case CardTypeEnum.Diamond:
+        return {
+          bg: 'radial-gradient(50% 50% at 90% 100%,#4C91E2 0%, #FFFFFF77 71.44%, transparent 100%), radial-gradient(50% 50% at 90% 100%,#88D4FF55 80%, transparent 150%)',
+          title: <>Dia<br/>Room</>,
+          description: 'High-priced room',
+          price: `${limit.diamond.min.toLocaleString()} - ${limit.diamond.max.toLocaleString()}`
+        };
+      case CardTypeEnum.Platinum:
+        return {
+          bg: 'radial-gradient(50% 50% at 90% 100%,#3F4369 0%, #CAD9FFA1 71.44%, transparent 100%), radial-gradient(50% 50% at 90% 100%,#CBCBCB55 80%, transparent 150%)',
+          title: <>Platinum<br/>Room</>,
+          description: 'High-priced room',
+          price: `${limit.platinum.min} - ${limit.platinum.max.toLocaleString()}`
+        };
       case CardTypeEnum.Gold:
         return {
-          bg: 'radial-gradient(60% 60% at 90% 90%, #FFBE16 0%, #F1FF7A1A 80%)',
+          bg: 'radial-gradient(50% 50% at 90% 100%,#FFBE16 0%, #F1FF7A77 71.44%, transparent 100%), radial-gradient(50% 50% at 90% 100%,#FFE34E55 80%, transparent 150%)',
           title: <>Golden<br/>Room</>,
           description: 'High-priced room',
-          price: '40-50'
+          price: `${limit.gold.min} - ${limit.gold.max}`
         };
       case CardTypeEnum.Silver:
         return {
-          bg: 'radial-gradient(60% 60% at 90% 90%, #606060 0%, #A3A3A31A 80%)',
+          bg: 'radial-gradient(50% 50% at 90% 100%,#525252 0%, #D7D7D777 71.44%, transparent 100%), radial-gradient(50% 50% at 90% 100%,#CBCBCB55 80%, transparent 150%)',
           title: <>Silver<br/>Room</>,
-          description: 'Middle-priced room',
-          price: '20-40'
-        };
-      case CardTypeEnum.Friend:
-        return {
-          bg: 'radial-gradient(60% 60% at 90% 90%, rgba(179, 130, 50, 1) 0%, rgba(229, 212, 153, 0.1) 80%)',
-          title: <>Play With<br/>Friends</>,
-          description: 'Low-priced room',
-          price: '10-20'
+          description: 'A Low-Priced Room',
+          price: `${limit.silver.min} - ${limit.silver.max}`
         };
       default:
         return {
-          bg: 'radial-gradient(60% 60% at 90% 90%, rgba(255, 151, 151, 1) 0%, rgba(255, 255, 255, 0.1) 80%)',
+          bg: 'radial-gradient(50% 50% at 90% 100%,#593407 0%, #8A705DA1 71.44%, transparent 100%), radial-gradient(50% 50% at 90% 100%,#FFAD4E55 30%, transparent 150%)',
           title: <>Bronze<br/>Room</>,
           description: 'STC Token Room',
           price: 'Free'
@@ -50,6 +72,7 @@ export default function RoomCard({ type, isSelected, width=236 }: Props) {
       {...!isSelected && {
         transform: 'perspective(600px) translateZ(-100px)'
       }}
+      backdropBlur="20px"
       borderRadius="20px"
       transition="0.5s"
       color="#fff"
@@ -62,7 +85,7 @@ export default function RoomCard({ type, isSelected, width=236 }: Props) {
         {content.description}
       </Text>
       <Text mt="12px" fontWeight="700" fontSize="20px" lineHeight="26px">
-        $ {content.price}
+        {content.price.length > 0 ? `$ ${content.price}`: ''}
       </Text>
     </Box>
   );

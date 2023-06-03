@@ -8,7 +8,6 @@ const width = 230;
 
 export default function NFTCarousel({ initialShow }: { initialShow?: number }) {
   const [current, setCurrent] = useState(initialShow || 0);
-
   
   useEffect(() => {
     let idx = current;

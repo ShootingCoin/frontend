@@ -5,17 +5,19 @@ import { color } from "@comps/styles/common.style";
 import Img from "next/image";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { currentSituationState, eggsState, isLoadingState, isMyTurnState, timeState } from "src/recoil/game";
-import { uuidState, webSocketState } from "src/recoil/socket";
+import { webSocketState } from "src/recoil/socket";
 import Egg from "src/interfaces/Egg";
 import { useRouter } from "next/router";
+import useWallet from "src/hooks/useWallet";
+import api from "src/api";
 
 const fullW = 500;
 const fullH = 500;
 
 export default function Game() {
   const router = useRouter();
+  const { address } = useWallet();
   const webSocket = useRecoilValue(webSocketState);
-  const uuid = useRecoilValue(uuidState);
   const [eggs, setEggs] = useRecoilState(eggsState);
   const [currentSituation, setCurrentSituation] = useRecoilState(currentSituationState);
   const [isMyTurn, setIsMyTurn] = useRecoilState(isMyTurnState);
@@ -105,7 +107,7 @@ export default function Game() {
       if (
         dragging == true &&
         // for demo
-        egg_array[drag_index].account === uuid
+        egg_array[drag_index].account === address
       ) {
         const rotateAngle = drag_x >= 0 ? Math.atan(drag_y / drag_x) : Math.atan(drag_y / drag_x) + Math.PI;
         const startX = egg_array[drag_index].x_pos;
@@ -150,10 +152,10 @@ export default function Game() {
         if (!egg_array[i].isOut) {
           ctx.beginPath();
           let image = new Image();
-          if (egg_array[i].account === uuid) {
-            image.src = '/imgs/coins/STC.svg';
-          } else {
+          if (egg_array[i].account === address) {
             image.src = '/imgs/coins/Polygon.svg';
+          } else {
+            image.src = '/imgs/coins/STC.svg';
           }
 
           ctx.drawImage(image, egg_array[i].x_pos - radius, egg_array[i].y_pos - radius, radius * 2, radius * 2);
@@ -235,7 +237,7 @@ export default function Game() {
       window.removeEventListener("touchend", mouseUpListener, false);
 
       dragging = false;
-      if (egg_array[drag_index].account !== uuid) return;
+      if (egg_array[drag_index].account !== address) return;
 
       let distance = Math.sqrt(drag_x * drag_x + drag_y * drag_y);
       let x_dir = drag_x / distance;
@@ -291,13 +293,17 @@ export default function Game() {
 
   useEffect(() => {
     if (currentSituation) {
-      const myEggs = currentSituation.filter(x => x.account === uuid && x.isOut === false).length;
-      const opponentEggs = currentSituation.filter(x => x.account !== uuid && x.isOut === false).length;
-
+      const myEggs = currentSituation.filter(x => x.account === address && x.isOut === false).length;
+      const opponentEggs = currentSituation.filter(x => x.account !== address && x.isOut === false).length;
+      const finish = async (amount: number) => {
+        await api.endGame(router.query.id as string, { account: address, amount: amount });
+      }
       if (myEggs === 0) {
-        router.push(`/game/${router.query.id}/result?status=lose`);
+        finish(100);
+        // router.push(`/game/${router.query.id}/result?status=lose`);
       } else if (opponentEggs === 0) {
-        router.push(`/game/${router.query.id}/result?status=win`);
+        finish(-100);
+        // router.push(`/game/${router.query.id}/result?status=win`);
       }
       console.log(
         "myEggs: " + myEggs + '\n' +

@@ -10,7 +10,7 @@ export const nftData = [
     code: '#30432',
     image: '/imgs/nfts/NFT_1.png',
     price: 0.043,
-    unit: 'STC',
+    unit: 'MATIC',
     effect: '10% Speed / 0.3% Size',
   },
   {
@@ -19,7 +19,7 @@ export const nftData = [
     code: '#98403',
     image: '/imgs/nfts/NFT_2.png',
     price: 0.043,
-    unit: 'STC',
+    unit: 'MATIC',
     effect: '10% Speed / 0.3% Size',
   },
   {
@@ -28,7 +28,7 @@ export const nftData = [
     code: '#911342',
     image: '/imgs/nfts/NFT_3.png',
     price: 0.043,
-    unit: 'STC',
+    unit: 'MATIC',
     effect: '10% Speed / 0.3% Size',
   },
   {
@@ -37,7 +37,7 @@ export const nftData = [
     code: '#22433',
     image: '/imgs/nfts/NFT_4.png',
     price: 0.043,
-    unit: 'STC',
+    unit: 'MATIC',
     effect: '10% Speed / 0.3% Size',
   },
   {
@@ -46,7 +46,7 @@ export const nftData = [
     code: '#21233',
     image: '/imgs/nfts/NFT_5.png',
     price: 0.043,
-    unit: 'STC',
+    unit: 'MATIC',
     effect: '10% Speed / 0.3% Size',
   },
   {
@@ -55,36 +55,36 @@ export const nftData = [
     code: '#12432',
     image: '/imgs/nfts/NFT_6.png',
     price: 0.043,
-    unit: 'STC',
+    unit: 'MATIC',
     effect: '10% Speed / 0.3% Size',
   }
 ];
 
 export const defaultChips: Chip[] = [
   {
-    name: 'STC',
-    unit: 'STC',
-    amount: 32,
+    name: 'Polygon',
+    unit: 'MATIC',
+    amount: 20,
   },
   {
-    name: 'STC',
-    unit: 'STC',
-    amount: 7,
+    name: 'Polygon',
+    unit: 'MATIC',
+    amount: 20,
   },
   {
-    name: 'STC',
-    unit: 'STC',
-    amount: 14,
+    name: 'Polygon',
+    unit: 'MATIC',
+    amount: 20,
   },
   {
-    name: 'STC',
-    unit: 'STC',
-    amount: 7,
+    name: 'Polygon',
+    unit: 'MATIC',
+    amount: 20,
   },
   {
-    name: 'STC',
-    unit: 'STC',
-    amount: 5.4,
+    name: 'Polygon',
+    unit: 'MATIC',
+    amount: 20,
   },
 ];
 
